@@ -1,0 +1,14 @@
+<meta>
+	<info auhor="mta-sa.org" name="Core resource" description="mta-sa.org communityserver core resource"/>
+	
+	<!-- Shared -->
+	<script src="shared/classlib.lua" type="shared"/>
+	
+	
+	<!-- Server -->
+	<script src="server/Main.lua" type="server"/>
+	
+	
+	<!-- Client -->
+	<script src="client/Main.lua" type="client"/>
+</meta>
