@@ -1,6 +1,6 @@
 addEventHandler("onResourceStart", resourceRoot,
 	function()
-		Core:new()
+		Core:new();
 	end
 )
 

@@ -1,14 +1,21 @@
 <meta>
 	<info auhor="mta-sa.org" name="Core resource" description="mta-sa.org communityserver core resource"/>
-	
+
 	<!-- Shared -->
 	<script src="shared/classlib.lua" type="shared"/>
-	
+	<script src="shared/classes/Object.lua" type="shared"/>
+	<script src="shared/classes/Singleton.lua" type="shared"/>
+	<script src="shared/classes/TimedPulse.lua" type="shared"/>
 	
 	<!-- Server -->
 	<script src="server/Main.lua" type="server"/>
-	
+	<script src="server/classes/Core.lua" type="server"/>
+	<script src="server/classes/RPC.lua" type="server"/>
+	<script src="server/classes/Database.lua" type="server"/>
 	
 	<!-- Client -->
 	<script src="client/Main.lua" type="client"/>
+	<script src="client/classes/Core.lua" type="client"/>
+	<script src="client/classes/RPC.lua" type="client"/>
+
 </meta>
