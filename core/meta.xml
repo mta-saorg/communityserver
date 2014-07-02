@@ -5,9 +5,11 @@
 	<!-- Shared -->
 	<script src="shared/classlib.lua" type="shared"/>
 	<script src="shared/importexport.lua" type="shared"/>
+	<script src="shared/useful.lua" type="shared"/>
 	<script src="shared/classes/Object.lua" type="shared"/>
 	<script src="shared/classes/Singleton.lua" type="shared"/>
 	<script src="shared/classes/TimedPulse.lua" type="shared"/>
+	<script src="shared/classes/File.lua" type="shared"/>
 	
 	<!-- Server -->
 	<script src="server/Main.lua" type="server"/>
