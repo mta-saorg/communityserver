@@ -1,46 +1,35 @@
-Database = inherit(Singleton);
+Database = inherit(Object)
 
 function Database:constructor(host, user, pass, database, port)
-	assert(type(host) == 'string');
-	assert(type(user) == 'string');
-	assert(type(pass) == 'string');
-	assert(type(database) == 'string');
+	assert(type(host) == "string" and type(user) == "string" and type(pass) == "string" and type(database) == "string", "Bad argument @ Database.constructor")
 	
-	self.cConnection = dbConnect('mysql', ('dbname=%s;host=%s;port=%d'):format(database, host, (type(port) == 'number' and port or 3306)), user, pass);
+	self.m_DbHandle = Connection("mysql", ("dbname=%s;host=%s;port=%d"):format(database, host, tonumber(port) or 3306), user, pass)
+	if not self.m_DbHandle then
+		outputServerLog("Could not establish a connection to the database. Stopping resource...")
+		stopResource(getThisResource())
+	end
 end
 
 function Database:destructor()
-
+	destroyElement(self.m_DbHandle)
 end
 
-function Database:query(query, ...)
-	assert(type(query) == 'string');
-
-	if(self:isConnected()) then
-		query = dbQuery(self.cConnection, query, ...);
-		local result = dbPoll(query, -1);
-		
-		if(not result and result == nil) then
-			dbFree(query);
-			return false;
-		end
-		
-		return result;
+function Database:queryFetch(query, ...)
+	local queryHandle = self.m_DbHandle:query(query, ...)
+	local result, rtn2, rtn3 = queryHandle:poll(-1)
+	
+	if result == false then
+		outputDebugString(("Database error: Errorcode: %d, Errormessage: %s"):format(rtn2, rtn3))
+		return false
 	end
 	
-	return false;
+	return result, rtn2, rtn3 -- result, affectedRows, lastInstertId
 end
 
-function Database:queryEx(query, ...)
-	assert(type(query) == 'string');
-	
-	if(self:isConnected()) then
-		return dbExec(self.cConnection, query, ...);
-	end
-	
-	return false;
+function Database:queryExec(query, ...)
+	return self.m_DbHandle:exec(query, ...)
 end
 
 function Database:isConnected()
-	return (self.cConnection and true or false);
+	return self.m_DbHandle ~= false
 end

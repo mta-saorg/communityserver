@@ -1,7 +1,7 @@
 Core = inherit(Singleton)
 
 function Core:constructor()
-	RPC:new();
+	RPC:new()
 end
 
 function Core:destructor()
