@@ -18,7 +18,7 @@
     <script src="server/classes/Database.lua" type="server" />
     <script src="server/classes/Player.lua" type="server" />
     
-    <script src="server/managers/Lobby.lua" type="server" />
+    <script src="server/classes/Lobby.lua" type="server" />
     
     <export function="export_setPlayerInfo" type="server" http="false" />
     <export function="export_getPlayerInfo" type="server" http="false" />
