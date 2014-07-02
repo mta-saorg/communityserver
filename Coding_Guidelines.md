@@ -76,6 +76,9 @@ end
 ### Semikola
 Semikola werden an Zeilenenden weggelassen.
 
+### Anführungszeichen
+Es werden Double Quotes (`" "`) verwendet.
+
 ### Anonyme Funktionen
 Anonyme Fuktionen werden mit einem Zeilenumbruch eingeleitet.
 
