@@ -1,14 +1,13 @@
 Singleton = {}
 
 function Singleton:getSingleton()
-	if not self.ms_Instance then
-		self.ms_Instance = self:new()
-	end
-	return self.ms_Instance
+	return self:new()
 end
 
 function Singleton:new(...)
-	self.new = function() end
+	if self.ms_Instance then
+		return self.ms_Instance
+	end
 	local inst = new(self, ...)
 	self.ms_Instance = inst
 	return inst
@@ -20,3 +19,5 @@ function Singleton:virtual_destructor()
 		v.new = Singleton.new
 	end
 end
+
+Singleton.__call = Singleton.new
