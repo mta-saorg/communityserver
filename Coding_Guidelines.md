@@ -29,14 +29,14 @@ end
 
 -- Klammern sind zur korrekten Auswertung der Bedingung notwendig --> Klammern setzen
 if (myFirstVar == 1 or mySecondVar == 1337) and myThirdVar == 42 then
-    print("Hallo!")
+  print("Hallo!")
 end
 ```
 
-## Leerzeichen nach Kommata
+### Leerzeichen nach Kommata
 Nach Kommata werden grundsätzlich Leerzeichen gesetzt.
 
-### Beispiel
+#### Beispiel
 ```lua
 function myFunc(a, b, c, d, e, f)
 end
@@ -45,10 +45,13 @@ myFunc(1, 2, 3, 4, 5, 6)
 local myTable = {1, 2, 3, 4, 5, 6}
 ```
 
+### Tabs vs Leerzeichen
+Zur Einrückungen werden __Tabs__ verwendet.
+
 ### Ungarische Notation
 Da Lua dynamisch typisiert ist, macht eine vollständige Umsetzung der ungarischen Notation keinen Sinn.
 Eine eingeschränkte Variante mag jedoch sinnvoll sein für:
-* Membervariable (Präfix: `m_`)
+* Membervariablen (Präfix: `m_`)
 * Klassenvariablen (Präfix: `ms_`)
 Zusätzlich wird für Klassen- sowieso Membernamen die *UpperCamelCase-* und für Methoden-, Funktions- sowie lokalen Variablen die *lowerCamcelCase-*Notation verwendet.
 
