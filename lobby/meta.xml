@@ -1,4 +1,12 @@
 <meta>
 	<info author="" name="" description=""/>
 	
+	<!-- SERVER -->
+	<script type="server" src="Main.lua"/>
+	<script type="server" src="api/Functions.lua"/>
+	
+	<!-- CLIENT -->
+	
+	<!-- SHARED -->
+	
 </meta>
