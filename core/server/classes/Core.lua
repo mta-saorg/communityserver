@@ -1,19 +1,13 @@
 Core = inherit(Singleton)
 
 function Core:constructor()
-	RPC:new();
-	Database:new('host', 'user', 'pass', 'database', port);
-	
-	if(Database:getSingleton():isConnected()) then
-		outputDebugString('Successfully connected to MySQL Server');
-	else
-		outputDebugString('Couldnt connect to MySQL Server.');
-	end
+	RPC:new()
+	sql = Database:new('host', 'user', 'pass', 'database', port)
 end
 
 function Core:destructor()
-	delete(RPC:getSingleton());
-	delete(Database:getSingleton());
+	delete(RPC:getSingleton())
+	delete(Database:getSingleton())
 end
 
 function Core:registerGamemode(resource)
