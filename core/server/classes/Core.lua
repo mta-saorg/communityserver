@@ -2,7 +2,7 @@ Core = inherit(Singleton)
 
 function Core:constructor()
 	RPC:new();
-	Database:new('127.0.0.1', 'root', '', 'luxrp');
+	Database:new('host', 'user', 'pass', 'database', port);
 	
 	if(Database:getSingleton():isConnected()) then
 		outputDebugString('Successfully connected to MySQL Server');
