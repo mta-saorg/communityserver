@@ -1,8 +1,10 @@
 <meta>
 	<info auhor="mta-sa.org" name="Core resource" description="mta-sa.org communityserver core resource"/>
-
+	<oop>true</oop>
+	
 	<!-- Shared -->
 	<script src="shared/classlib.lua" type="shared"/>
+	<script src="shared/importexport.lua" type="shared"/>
 	<script src="shared/classes/Object.lua" type="shared"/>
 	<script src="shared/classes/Singleton.lua" type="shared"/>
 	<script src="shared/classes/TimedPulse.lua" type="shared"/>
@@ -12,6 +14,10 @@
 	<script src="server/classes/Core.lua" type="server"/>
 	<script src="server/classes/RPC.lua" type="server"/>
 	<script src="server/classes/Database.lua" type="server"/>
+	<script src="server/classes/Player.lua" type="server"/>
+	
+	<export function="export_setPlayerInfo" type="server" http="false"/>
+	<export function="export_getPlayerInfo" type="server" http="false"/>
 	
 	<!-- Client -->
 	<script src="client/Main.lua" type="client"/>

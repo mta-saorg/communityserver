@@ -21,3 +21,4 @@ function Singleton:virtual_destructor()
 end
 
 Singleton.__call = Singleton.new
+setmetatable(Singleton, {__call = Singleton.__call})

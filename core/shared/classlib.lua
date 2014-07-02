@@ -30,7 +30,8 @@ function enew(element, class, ...)
 			__mul = class.__mul;
 			__div = class.__div;
 			__pow = class.__pow;
-			__concat = class.__concat;		})
+			__concat = class.__concat;		
+		})
 		
 	oop.elementInfo[element] = instance
 	
@@ -154,20 +155,19 @@ function inherit(from, what)
 	metatable.__super = oldsuper
 	metatable.__index = _inheritIndex
 	
+	-- Inherit __call
+	for k, v in ipairs(metatable.__super) do
+		if v.__call then
+			metatable.__call = v.__call
+			break
+		end
+	end
+	
 	return setmetatable(what, metatable)
 end
 
 function _inheritIndex(self, key)
-	if key == "isLoggedIn" then
-		outputDebug("ii "..tostring(key))
-	end
 	for k, v in pairs(super(self) or {}) do
-		if key == "isLoggedIn" then
-			outputDebug("ii lookup "..tostring(key))			
-			outputDebug(v == Player)
-			outputDebug(v == DatabasePlayer)
-			outputDebug(table.find(_G, v))
-		end
 		if v[key] then return v[key] end
 	end
 	return nil
@@ -287,10 +287,7 @@ oop.prepareClass = function(name)
 	mt.__index = function(self, key)
 		if not oop.handled then
 			if not oop.elementInfo[self] then
-				local ec = oop.elementClasses[getElementType(self)]
-				outputDebug(ec)
-				outputDebug(getElementType(self))
-				enew(self, oop.elementClasses[getElementType(self)] or MTAElement)
+				enew(self, oop.elementClasses[getElementType(self)] or {})
 			end
 			if oop.elementInfo[self][key] ~= nil  then
 				oop.handled = false
@@ -310,10 +307,7 @@ oop.prepareClass = function(name)
 		end
 		
 		if not oop.elementInfo[self] then
-			local ec = oop.elementClasses[getElementType(self)]
-			outputDebug(ec)
-			outputDebug(getElementType(self))
-			enew(self, oop.elementClasses[getElementType(self)] or MTAElement)
+			enew(self, oop.elementClasses[getElementType(self)] or {})
 		end
 		
 		oop.elementInfo[self][key] = value
@@ -359,19 +353,12 @@ oop.initClasses = function()
 	else
 		oop.initPlayerClass()
 	end
-	
-	addEventHandler("onPlayerConnect", root, function(pname) oop.onPlayerCreate(getPlayerFromName(pname)) end)
-	for k,v in pairs(getElementsByType("player")) do oop.onPlayerCreate(v) end
 end
 
 oop.initPlayerClass = function()
 	oop.mta_metatable["player"] = oop.getMTATypeMetatable("player")
 	removeEventHandler("onPlayerConnect", root, oop.initPlayerClass)
 	oop.prepareClass("player")
-end
-
-oop.onPlayerCreate = function(player)
-	enew(player, Player)
 end
 
 oop.initClasses()

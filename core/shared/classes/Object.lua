@@ -9,3 +9,4 @@ function Object:delete(...)
 end
 
 Object.__call = Object.new
+setmetatable(Object, {__call = Object.__call})
