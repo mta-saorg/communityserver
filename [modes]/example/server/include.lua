@@ -5,3 +5,7 @@ function getGamemodeInfo()
 		MinPlayer = 3
 	}
 end
+
+addEvent('onPlayerJoinGamemode', true)
+addEventHandler('onPlayerJoinGamemode', resourceRoot, onPlayerJoinLobby)
+

@@ -1,7 +1,11 @@
 function getGamemodeInfo()
 	return {
-		Name = "Lobby",
-		MaxPlayer = -1,
-		MinPlayer = -1
+		Name = "Default Gamemode",
+		MaxPlayer = 99,
+		MinPlayer = 1
 	}
 end
+
+addEvent('onPlayerJoinGamemode', true)
+addEventHandler('onPlayerJoinGamemode', getResourceRootElement(getThisResource()), onPlayerJoinLobby)
+

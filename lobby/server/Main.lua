@@ -1,1 +1,3 @@
-exports["core"]:getPlayers()
+function onPlayerJoinLobby(player)
+	outputChatBox('DEBUG - onPlayerJoinLobby')
+end

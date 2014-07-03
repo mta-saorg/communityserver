@@ -25,16 +25,16 @@ function PlayerManager:playerConnect(playerNick, playerIP, playerUsername, playe
 end
 
 function PlayerManager:playerChat(msg, mtype)
-	-- NOTE: IF YOU HAVE FREEROAM ENABLED YOU MAY GET DOUBLE MESSAGES
-	-- Check if the message type is a normal one
-	if mtype == 0 then
-		-- Cancel the event so the message isn't displayed for all
-		cancelEvent()
+	-- cancel Event to avoid sending any message from the player (/say, /teamsay & /me)
+	cancelEvent()
 
-		-- Get the sender gamemode & iterate over all players in the gamemode
-		for player in pairs(source:getGamemode():getPlayers()) do
-			outputChatBox(getPlayerName(source).."#E7D9B0: "..msg, player, 231, 217, 176, true)
+	if mtype == 0 then -- /say
+		if not source:isMuted() then
+			source:getGamemode():broadcastMessage(("%s#E7D9B0: %s"):format(source:getName(), msg), 231, 217, 176, true)
 		end
-		
+	elseif mtype == 1 then -- /me
+	
+	elseif mtype == 2 then -- /teamsay
+	
 	end
 end

@@ -33,3 +33,14 @@ end
 function Player:getInfo(gamemode, key)
 	return self.m_Info[gamemode][key]
 end
+
+function Player:isLoggedin()
+	-- Todo: Check
+	return true
+end
+
+function Player:isMuted()
+	-- Todo: Check
+	return false
+end
+

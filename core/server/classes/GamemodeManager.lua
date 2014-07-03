@@ -80,12 +80,13 @@ function GamemodeManager:resourceStop(resource)
 		end
 		
 		local currentGamemode = self:getGamemodeFromResource(resource)
-		for player in pairs(currentGamemode:getPlayers()) do 
-			-- transfer all player into the new gamemode
-			currentGamemode:removePlayer(player)
-			targetGamemode:addPlayer(player)
+		if currentGamemode:getPlayerCounter() >= 1 then
+			for player in pairs(currentGamemode:getPlayers()) do 
+				-- transfer all player into the new gamemode
+				currentGamemode:removePlayer(player)
+				targetGamemode:addPlayer(player)
+			end
 		end
-	
 		-- unregister the gamemode
 		self:unregisterGamemode(resource)
 		
@@ -96,6 +97,6 @@ end
 addCommandHandler("jl",
 	function(p, cmd, gm)
 		p:getGamemode():removePlayer(p)
-		GamemodeManager:getSingleton():getGamemodeFromResource(getResourceFromName("testing")):addPlayer(p)
+		GamemodeManager:getSingleton():getGamemodeFromResource(getResourceFromName(gm)):addPlayer(p)
 	end
 )
