@@ -11,7 +11,8 @@ function Gamemode:constructor(resource, bNeededProperties)
 	else
 		-- emergency/default properties
 		self.m_Name = "None"
-		self.m_MaxPlayer = -1
+		self.m_Desc = ""
+		self.m_MaxPlayer = getMaxPlayers()
 		self.m_MinPlayer = -1
 		
 	end
@@ -27,8 +28,21 @@ function Gamemode:destructor()
 	
 end
 
-function Gamemode:getName()
-	return self.m_Name
+function Gamemode:setInfo(key, val)
+	if(type(key) == "string" and self["m_"..key]) then
+		self["m_"..key] = val
+	end
+end
+
+function Gamemode:getInfo(arg)
+	if(type(arg) == 'string' and self["m_"..arg]) then
+		return self["m_"..arg]
+	end
+	return {
+		Name = self.m_Name,
+		Desc = self.m_Desc,
+		maxPlayer = self.m_MaxPlayer,
+	}
 end
 
 function Gamemode:getResource()
@@ -53,9 +67,10 @@ function Gamemode:addPlayer(player)
 		self.m_PlayerCount = self.m_PlayerCount + 1
 	end
 	
-	if self:getMaxPlayer() < self:getPlayerCounter() then
+	if self:getPlayerCounter() < self:getMaxPlayer() then
 		player:setGamemode(self)
-		self:broadcastMessage(("[Lobby]: %s has joined Lobby %s! (%d / %d)"):format(player:getName(), self.m_Name, self:getPlayerCounter(), self:getMaxPlayer()))
+		self:broadcastMessage(("[Lobby]: %s has joined Lobby \"%s\"! (%d/%d)"):format(player:getName(), self.m_Name, self:getPlayerCounter(), self:getMaxPlayer()))
+
 		if getResourceName(self:getResource()) ~= "core" then
 			call(self:getResource(), "onPlayerJoinLobby", player)
 		end
@@ -75,10 +90,10 @@ function Gamemode:removePlayer(player)
 	if self.m_Players[player] then
 		self.m_Players[player] = nil
 		self.m_PlayerCount = self.m_PlayerCount - 1
-	end
-	
-	self:broadcastMessage(("[Lobby]: %s has lefted the Lobby!"):format(player:getName()))
-	if getResourceName(self:getResource()) ~= "core" then
-		call(self:getResource(), "onPlayerQuitLobby", player)
+		
+		self:broadcastMessage(("[Lobby]: %s has left the Lobby! (Resource: %s)"):format(player:getName(), getResourceName(self:getResource())))
+		if getResourceName(self:getResource()) ~= "core" then
+			call(self:getResource(), "onPlayerQuitLobby", player)
+		end
 	end
 end

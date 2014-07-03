@@ -4,12 +4,6 @@ function PlayerManager:constructor()
 	-- add event handlers
 	addEventHandler("onPlayerConnect", root, bind(self.playerConnect, self), true, "high+99999")
 	addEventHandler("onPlayerChat", root, bind(self.playerChat, self))
-	
-	for k, v in pairs(getElementsByType("player")) do 
-		Player.constructor(v)
-		GamemodeManager:getSingleton():getGamemodeFromResource("core"):addPlayer(v)
-	end
-	
 end
 
 function PlayerManager:playerConnect(playerNick, playerIP, playerUsername, playerSerial, playerVersionNumber, playerVersionString)
@@ -17,7 +11,7 @@ function PlayerManager:playerConnect(playerNick, playerIP, playerUsername, playe
 	Player.constructor(getPlayerFromName(playerNick))
 	
 	if not GamemodeManager:getSingleton():getGamemodeFromResource("lobby") then
-		GamemodeManager:getSingleton():getGamemodeFromResource("core"):addPlayer(v)
+		GamemodeManager:getSingleton():getGamemodeFromResource(getThisResource()):addPlayer(v)
 	else
 		GamemodeManager:getSingleton():getGamemodeFromResource("lobby"):addPlayer(v)
 	end

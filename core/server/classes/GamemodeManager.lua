@@ -7,6 +7,11 @@ function GamemodeManager:constructor()
 	-- register the waiting area ( hacky )
 	self.m_Gamemodes[getThisResource()] = Gamemode:new(getThisResource(), false)
 	
+	-- move every player into the waiting area
+	for _, player in pairs(getElementsByType("player")) do
+		self:getGamemodeFromResource(getThisResource()):addPlayer(player)
+	end
+	
 	-- add the event handlers
 	addEventHandler("onResourceStart", root, bind(self.resourceStart, self))
 	addEventHandler("onResourceStop", root, bind(self.resourceStop, self))
@@ -17,7 +22,6 @@ function GamemodeManager:destructor()
 	for resource, gamemode in pairs(self.m_Gamemodes) do
 		delete(gamemode)
 	end
-	
 end
 
 function GamemodeManager:getGamemodeFromResource(argument)
@@ -47,10 +51,11 @@ function GamemodeManager:unregisterGamemode(resource)
 	if self.m_Gamemodes[resource] then
 		-- release the gamemode
 		local currentGamemode = self:getGamemodeFromResource(resource)
-		
-		outputServerLog(("[GamemodeManager]: Removed Gamemode %s (Resource: %s)"):format(self:getGamemodeFromResource(resource).m_Name, getResourceName(resource)))
-		delete(currentGamemode)
-		self.m_Gamemodes[resource] = nil
+		if currentGamemode then
+			outputServerLog(("[GamemodeManager]: Removed Gamemode %s (Resource: %s)"):format(currentGamemode:getInfo("Name"), getResourceName(resource)))
+			delete(currentGamemode)
+			self.m_Gamemodes[resource] = nil
+		end
 	end
 end
 
@@ -61,7 +66,7 @@ function GamemodeManager:resourceStart(resource)
 		
 		if getResourceName(resource) == "lobby" then
 			local waitingArea = self:getGamemodeFromResource(getThisResource())
-			for player in pairs(waitingArea:getPlayers()) do 
+			for player in pairs(waitingArea:getPlayers()) do
 				waitingArea:removePlayer(player)
 				self:getGamemodeFromResource(resource):addPlayer(player)
 			end
@@ -76,15 +81,18 @@ function GamemodeManager:resourceStop(resource)
 		if getResourceName(resource) == "lobby" then
 			targetGamemode = self:getGamemodeFromResource(getThisResource())
 		else
-			targetGamemode = self:getGamemodeFromResource("lobby")
+			targetGamemode = self:getGamemodeFromResource(resource)
 		end
 		
 		local currentGamemode = self:getGamemodeFromResource(resource)
-		if currentGamemode:getPlayerCounter() >= 1 then
-			for player in pairs(currentGamemode:getPlayers()) do 
-				-- transfer all player into the new gamemode
-				currentGamemode:removePlayer(player)
-				targetGamemode:addPlayer(player)
+		
+		if(currentGamemode and targetGamemode) then
+			if currentGamemode:getPlayerCounter() >= 1 then
+				for player in pairs(currentGamemode:getPlayers()) do 
+					-- transfer all player into the new gamemode
+					currentGamemode:removePlayer(player)
+					targetGamemode:addPlayer(player)
+				end
 			end
 		end
 		-- unregister the gamemode
@@ -100,3 +108,11 @@ addCommandHandler("jl",
 		GamemodeManager:getSingleton():getGamemodeFromResource(getResourceFromName(gm)):addPlayer(p)
 	end
 )
+
+function getGamemodePlayers()
+	local GM = GamemodeManager:getSingleton():getGamemodeFromResource(sourceResource)
+	if GM then
+		return GM:getPlayers()
+	end
+	return false
+end

@@ -1,5 +1,9 @@
 <meta>
-    <info auhor="mta-sa.org" name="Core resource" description="mta-sa.org communityserver core resource" />
+    <info 
+		auhor="mta-sa.org"
+		name="Core resource"
+		description="mta-sa.org communityserver core resource"
+	/>
 	<min_mta_version client="1.4" server="1.4"/>
     <oop>true</oop>
     
@@ -30,4 +34,6 @@
 	    
     <export function="export_setPlayerInfo" type="server" http="false" />
     <export function="export_getPlayerInfo" type="server" http="false" />
+	
+    <export function="getGamemodePlayers" type="server" http="false" />
 </meta>
