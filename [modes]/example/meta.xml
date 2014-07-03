@@ -1,5 +1,10 @@
 <meta>
-	<info auhor="mta-sa.org" name="Testing resource" description="mta-sa.org communityserver lobby resource" type="mode" />
+	<info
+		auhor="mta-sa.org"
+		name="Default Lobby"
+		description="mta-sa.org communityserver lobby resource" 
+		type="mode" 
+	/>
 	
 	
 	<!-- SERVER -->
@@ -7,6 +12,8 @@
 	<script src="server/include.lua" type="server" />
 	
 	<export function="getGamemodeInfo" type="server" http="false" />
+	<export function="onPlayerJoinLobby" type="server" http="false" />
+	<export function="onPlayerQuitLobby" type="server" http="false" />
 	
 	<!-- CLIENT -->
 	

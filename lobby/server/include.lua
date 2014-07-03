@@ -6,6 +6,3 @@ function getGamemodeInfo()
 	}
 end
 
-addEvent('onPlayerJoinGamemode', true)
-addEventHandler('onPlayerJoinGamemode', getResourceRootElement(getThisResource()), onPlayerJoinLobby)
-

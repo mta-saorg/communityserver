@@ -1,11 +1,8 @@
 function getGamemodeInfo()
 	return {
-		Name = "Testing",
-		MaxPlayer = 2,
-		MinPlayer = 3
+		Name = "Default Gamemode",
+		MaxPlayer = 99,
+		MinPlayer = 1
 	}
 end
-
-addEvent('onPlayerJoinGamemode', true)
-addEventHandler('onPlayerJoinGamemode', resourceRoot, onPlayerJoinLobby)
 

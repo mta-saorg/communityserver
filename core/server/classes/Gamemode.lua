@@ -32,7 +32,7 @@ function Gamemode:getName()
 end
 
 function Gamemode:getResource()
-	return getResourceRootElement(self.m_Resource)
+	return self.m_Resource
 end
 
 function Gamemode:getMaxPlayer()
@@ -55,9 +55,10 @@ function Gamemode:addPlayer(player)
 	
 	if self:getMaxPlayer() < self:getPlayerCounter() then
 		player:setGamemode(self)
-		self:broadcastMessage(('[Lobby]: %s has joined Lobby %s! (%d / %d)'):format(player:getName(), self.m_Name, self:getPlayerCounter(), self:getMaxPlayer()))
-		-- ToDo: trigger the event "onPlayerJoinGamemode"
-		triggerEvent('onPlayerJoinGamemode', self:getResource(), player)
+		self:broadcastMessage(("[Lobby]: %s has joined Lobby %s! (%d / %d)"):format(player:getName(), self.m_Name, self:getPlayerCounter(), self:getMaxPlayer()))
+		if getResourceName(self:getResource()) ~= "core" then
+			call(self:getResource(), "onPlayerJoinLobby", player)
+		end
 		return true
 	end
 	
@@ -76,6 +77,8 @@ function Gamemode:removePlayer(player)
 		self.m_PlayerCount = self.m_PlayerCount - 1
 	end
 	
-	self:broadcastMessage(('[Lobby]: %s has lefted the Lobby!'):format(player:getName()))
-	-- ToDo: trigger the event "onPlayerQuitGamemode"
+	self:broadcastMessage(("[Lobby]: %s has lefted the Lobby!"):format(player:getName()))
+	if getResourceName(self:getResource()) ~= "core" then
+		call(self:getResource(), "onPlayerQuitLobby", player)
+	end
 end

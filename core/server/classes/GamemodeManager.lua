@@ -38,7 +38,7 @@ function GamemodeManager:registerGamemode(resource)
 	if not self.m_Gamemodes[resource] then
 		-- create a new gamemode
 		self.m_Gamemodes[resource] = Gamemode:new(resource, true)
-		outputServerLog(('[GamemodeManager]: Added Gamemode %s (Resource: %s)'):format(self:getGamemodeFromResource(resource).m_Name, getResourceName(resource)))
+		outputServerLog(("[GamemodeManager]: Added Gamemode %s (Resource: %s)"):format(self:getGamemodeFromResource(resource).m_Name, getResourceName(resource)))
 		
 	end
 end
@@ -48,7 +48,7 @@ function GamemodeManager:unregisterGamemode(resource)
 		-- release the gamemode
 		local currentGamemode = self:getGamemodeFromResource(resource)
 		
-		outputServerLog(('[GamemodeManager]: Removed Gamemode %s (Resource: %s)'):format(self:getGamemodeFromResource(resource).m_Name, getResourceName(resource)))
+		outputServerLog(("[GamemodeManager]: Removed Gamemode %s (Resource: %s)"):format(self:getGamemodeFromResource(resource).m_Name, getResourceName(resource)))
 		delete(currentGamemode)
 		self.m_Gamemodes[resource] = nil
 	end

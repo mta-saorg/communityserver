@@ -12,6 +12,8 @@
 	<script src="server/include.lua" type="server" />
 	
 	<export function="getGamemodeInfo" type="server" http="false" />
+	<export function="onPlayerJoinLobby" type="server" http="false" />
+	<export function="onPlayerQuitLobby" type="server" http="false" />
 	
 	<!-- CLIENT -->
 	

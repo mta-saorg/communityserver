@@ -1,3 +1,7 @@
 function onPlayerJoinLobby(player)
-	outputChatBox('DEBUG - onPlayerJoinLobby')
+	outputChatBox("DEBUG - onPlayerJoinLobby")
+end
+
+function onPlayerQuitLobby(player)
+	outputChatBox("DEBUG - onPlayerQuitLobby")
 end
