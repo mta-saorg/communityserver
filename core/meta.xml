@@ -12,8 +12,10 @@
     <!-- Server -->
     <script src="server/main.lua" type="server" />
     <script src="server/classes/Core.lua" type="server" />
-    <script src="server/manager/GamemodeManager.lua" type="server" />
+    <script src="server/classes/GamemodeManager.lua" type="server" />
+    <script src="server/classes/PlayerManager.lua" type="server" />
 	<script src="server/classes/Gamemode.lua" type="server" />
+	<script src="server/classes/Player.lua" type="server" />
     
     <!-- Client -->
     <script src="client/main.lua" type="client" />

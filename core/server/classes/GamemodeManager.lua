@@ -61,7 +61,7 @@ function GamemodeManager:resourceStart(resource)
 		
 		if getResourceName(resource) == "lobby" then
 			local waitingArea = self:getGamemodeFromResource(getThisResource())
-			for player in pairs(waitingArea:getPlayers()) do
+			for player in pairs(waitingArea:getPlayers()) do 
 				waitingArea:removePlayer(player)
 				self:getGamemodeFromResource(resource):addPlayer(player)
 			end
@@ -95,6 +95,7 @@ end
 -- BETA COMMANDS
 addCommandHandler("jl",
 	function(p, cmd, gm)
+		p:getGamemode():removePlayer(p)
 		GamemodeManager:getSingleton():getGamemodeFromResource(getResourceFromName("testing")):addPlayer(p)
 	end
 )

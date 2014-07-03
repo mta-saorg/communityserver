@@ -1,7 +1,6 @@
 Gamemode = inherit(Object)
 
 function Gamemode:constructor(resource, bNeededProperties)
-	outputChatBox(tostring(bNeededProperties))
 	if bNeededProperties then
 		-- take over the gamemode's properties
 		local info = exports[resource]:getGamemodeInfo()
@@ -36,6 +35,7 @@ function Gamemode:addPlayer(player)
 		self.m_Players[player] = {}
 	end
 	
+	player:setGamemode(self)
 	outputChatBox(getPlayerName(player) .. " joined the gamemode ( " .. self.m_Name .. " ) ")
 	-- ToDo: trigger the event "onPlayerJoinGamemode"
 end
@@ -43,7 +43,7 @@ end
 function Gamemode:removePlayer(player)
 	if self.m_Players[player] then
 		self.m_Players[player] = nil
-		-- ToDo: Save all data into the database
+		collectgarbage()
 	end
 	
 	outputChatBox(getPlayerName(player) .. " left the gamemode ( " .. self.m_Name .. " ) ")
