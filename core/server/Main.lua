@@ -1,11 +1,15 @@
 addEventHandler("onResourceStart", resourceRoot,
 	function()
-		Core:new();
+		-- Instantiate Core
+		Core:new()
+		
 	end
 )
 
 addEventHandler("onResourceStop", resourceRoot,
 	function()
+		-- Release Core
 		delete(Core:getSingleton())
+		
 	end
 )
