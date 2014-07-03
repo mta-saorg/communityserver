@@ -14,16 +14,19 @@ function Player:constructor()
 					})
 				return self[key]
 			end
-		}
-	)
+		})
 end
 
-function Player:setGamemode(gamemode)
-	self.m_Gamemode = gamemode
+-- HACK: Make sure the constructor is called
+addEventHandler("onPlayerConnect", root, function(name) Player.constructor(getPlayerFromName(name)) end, true, "high+99999")
+for k, v in pairs(getElementsByType("player")) do Player.constructor(v) end
+
+function Player:setGamemode()
+	
 end
 
 function Player:getGamemode()
-	return self.m_Gamemode
+	
 end
 
 function Player:setInfo(gamemode, key, value)

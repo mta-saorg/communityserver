@@ -1,12 +1,9 @@
 <meta>
-	<info auhor="mta-sa.org" name="Lobby resource" description="mta-sa.org communityserver lobby resource" type="mode" />
-	
+	<info author="" name="" description=""/>
 	
 	<!-- SERVER -->
-	<script src="server/Main.lua" type="server" />
-	<script src="server/include.lua" type="server" />
-	
-	<export function="getGamemodeInfo" type="server" http="false" />
+	<script type="server" src="Main.lua"/>
+	<script type="server" src="api/Functions.lua"/>
 	
 	<!-- CLIENT -->
 	

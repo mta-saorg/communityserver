@@ -4,21 +4,31 @@
     
     <!-- Shared -->
     <script src="shared/classlib.lua" type="shared" />
+    <script src="shared/importexport.lua" type="shared" />
+    <script src="shared/useful.lua" type="shared" />
     <script src="shared/classes/Object.lua" type="shared" />
     <script src="shared/classes/Singleton.lua" type="shared" />
     <script src="shared/classes/TimedPulse.lua" type="shared" />
     <script src="shared/classes/File.lua" type="shared" />
     
     <!-- Server -->
-    <script src="server/main.lua" type="server" />
+    <script src="server/Main.lua" type="server" />
     <script src="server/classes/Core.lua" type="server" />
-    <script src="server/classes/GamemodeManager.lua" type="server" />
-    <script src="server/classes/PlayerManager.lua" type="server" />
-	<script src="server/classes/Gamemode.lua" type="server" />
-	<script src="server/classes/Player.lua" type="server" />
+    <script src="server/classes/RPC.lua" type="server" />
+    <script src="server/classes/Database.lua" type="server" />
+    <script src="server/classes/Player.lua" type="server" />
+    
+    <script src="server/classes/Lobby.lua" type="server" />
+    
+    <export function="export_setPlayerInfo" type="server" http="false" />
+    <export function="export_getPlayerInfo" type="server" http="false" />
+    <export function="export_registerGamemode" type="server" http="false" />
+    <export function="export_unregisterGamemode" type="server" http="false" />
     
     <!-- Client -->
-    <script src="client/main.lua" type="client" />
+    <script src="client/Main.lua" type="client" />
+    <script src="client/classes/Core.lua" type="client" />
+    <script src="client/classes/RPC.lua" type="client" />
     
     <min_mta_version client="1.3.5-9.06194"></min_mta_version>
 </meta>
