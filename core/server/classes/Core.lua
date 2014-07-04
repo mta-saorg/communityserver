@@ -2,7 +2,7 @@ Core = inherit(Singleton)
 
 function Core:constructor()
 	RPC:new()
-	--sql = Database:new("127.0.0.1", "root", "", "luxrp", 3306)
+	sql = Database:new("127.0.0.1", "user", "pass", "database", 3306)
 	
 	-- Initialize managers
 	GamemodeManager:new()
@@ -43,3 +43,22 @@ end
 
 export(Core, "setPlayerInfo")
 export(Core, "getPlayerInfo")
+
+
+
+-- Dev
+------
+
+addCommandHandler("drun", function (player, command, ...)
+	local commandstring = table.concat({...}, " ")
+	outputChatBox(("Executing code: %s"):format(commandstring), player, 255, 100, 100)
+	local ret, err = loadstring("return "..commandstring)
+	if err then
+		ret, err = loadstring(commandstring)
+	end
+	if not err then
+		outputChatBox(("Command result: %s"):format(tostring(pcall(ret))), player, 255, 100, 100)
+	else
+		outputChatBox(("Executing failed: %s"):format(err), player, 255, 100, 100)
+	end
+end)

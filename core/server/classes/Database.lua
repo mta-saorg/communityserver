@@ -2,8 +2,8 @@ Database = inherit(Object)
 
 function Database:constructor(host, user, pass, database, port)
 	assert(type(host) == "string" and type(user) == "string" and type(pass) == "string" and type(database) == "string", "Bad argument @ Database.constructor")
-	
-	self.m_DbHandle = Connection("mysql", ("dbname=%s;host=%s;port=%d"):format(database, host, tonumber(port) or 3306), user, pass)
+	--self.m_DbHandle = Connection("mysql", ("dbname=%s;host=%s;port=%d"):format(database, host, tonumber(port) or 3306), user, pass)
+	self.m_DbHandle = dbConnect("mysql", ("dbname=%s;host=%s;port=%d"):format(database, host, tonumber(port) or 3306), user, pass)
 	if not self.m_DbHandle then
 		outputServerLog("Could not establish a connection to the database. Stopping resource...")
 		stopResource(getThisResource())
@@ -15,7 +15,8 @@ function Database:destructor()
 end
 
 function Database:queryFetch(query, ...)
-	local queryHandle = self.m_DbHandle:query(query, ...)
+	--local queryHandle = self.m_DbHandle:query(query, ...)
+	local queryHandle = dbQuery(self.m_DbHandle, query, ...)
 	local result, rtn2, rtn3 = queryHandle:poll(-1)
 	
 	if result == false then
@@ -27,7 +28,8 @@ function Database:queryFetch(query, ...)
 end
 
 function Database:queryExec(query, ...)
-	return self.m_DbHandle:exec(query, ...)
+	--return self.m_DbHandle:exec(query, ...)
+	return dbExec(self.m_DbHandle, query, ...)
 end
 
 function Database:isConnected()
