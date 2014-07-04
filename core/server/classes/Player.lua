@@ -34,7 +34,7 @@ function Player:getInfo(gamemode, key)
 	return self.m_Info[gamemode][key]
 end
 
-function Player:isLoggedin()
+function Player:isLoggedIn()
 	-- Todo: Check
 	return true
 end

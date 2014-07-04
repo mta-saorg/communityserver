@@ -3,17 +3,22 @@ PlayerManager = inherit(Singleton)
 function PlayerManager:constructor()
 	-- add event handlers
 	addEventHandler("onPlayerConnect", root, bind(self.playerConnect, self), true, "high+99999")
+	addEventHandler("onPlayerJoin", root, bind(self.playerJoin, self), true, "high+99999")
 	addEventHandler("onPlayerChat", root, bind(self.playerChat, self))
 end
 
 function PlayerManager:playerConnect(playerNick, playerIP, playerUsername, playerSerial, playerVersionNumber, playerVersionString)
+	local player = getPlayerFromName(playerNick)
+
 	-- call the player constructor to extend the mta class
-	Player.constructor(getPlayerFromName(playerNick))
-	
+	Player.constructor(player)
+end
+
+function PlayerManager:playerJoin()
 	if not GamemodeManager:getSingleton():getGamemodeFromResource("lobby") then
-		GamemodeManager:getSingleton():getGamemodeFromResource(getThisResource()):addPlayer(v)
+		GamemodeManager:getSingleton():getGamemodeFromResource(getThisResource()):addPlayer(source)
 	else
-		GamemodeManager:getSingleton():getGamemodeFromResource("lobby"):addPlayer(v)
+		GamemodeManager:getSingleton():getGamemodeFromResource("lobby"):addPlayer(source)
 	end
 	
 end

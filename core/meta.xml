@@ -5,12 +5,14 @@
 		description="mta-sa.org communityserver core resource"
 	/>
 	<min_mta_version client="1.4" server="1.4"/>
+	<include resource="lobby"/>
     <oop>true</oop>
     
     <!-- Shared -->
     <script src="shared/classlib.lua" type="shared" />
     <script src="shared/importexport.lua" type="shared" />
     <script src="shared/useful.lua" type="shared" />
+	<script src="shared/ooploader.lua" type="shared"/>
     <script src="shared/classes/Object.lua" type="shared" />
     <script src="shared/classes/Singleton.lua" type="shared" />
     <script src="shared/classes/TimedPulse.lua" type="shared" />
@@ -34,6 +36,7 @@
 	    
     <export function="export_setPlayerInfo" type="server" http="false" />
     <export function="export_getPlayerInfo" type="server" http="false" />
+    <export function="getOOPWrapperCode" type="shared" http="false" />
 	
     <export function="getGamemodePlayers" type="server" http="false" />
 </meta>

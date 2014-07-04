@@ -20,11 +20,11 @@ function Core:destructor()
 end
 
 function Core:setPlayerInfo(player, key, value)
-	player:setInfo(self.m_Gamemodes[sourceResource].sqlName, key, value)
+	player:setInfo(GamemodeManager:getSingleton():getGamemodes()[sourceResource].sqlName, key, value)
 end
 
 function Core:getPlayerInfo(player, key)
-	player:getInfo(self.m_Gamemodes[sourceResource].sqlName, key)
+	player:getInfo(GamemodeManager:getSingleton():getGamemodes()[sourceResource].sqlName, key)
 end
 
 export(Core, "setPlayerInfo")

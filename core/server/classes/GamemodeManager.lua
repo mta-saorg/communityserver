@@ -24,6 +24,10 @@ function GamemodeManager:destructor()
 	end
 end
 
+function GamemodeManager:getGamemodes()
+	return self.m_Gamemodes
+end
+
 function GamemodeManager:getGamemodeFromResource(argument)
 	if type(argument) == "string" then
 		for resource in pairs(self.m_Gamemodes) do 
