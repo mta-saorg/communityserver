@@ -5,7 +5,7 @@
 		description="mta-sa.org communityserver lobby resource" 
 		type="mode" 
 	/>
-	
+	<oop>true</oop>
 	
 	<!-- SERVER -->
 	<script src="server/Main.lua" type="server" />
