@@ -24,8 +24,12 @@
     <script src="server/classes/RPC.lua" type="server" />
     <script src="server/classes/Database.lua" type="server" />
     <script src="server/classes/GamemodeManager.lua" type="server" />
-    <script src="server/classes/PlayerManager.lua" type="server" />
 	<script src="server/classes/Gamemode.lua" type="server" />
+	
+	<script src="server/classes/PermissionManager.lua" type="server" />
+	<script src="server/classes/PermissionGroup.lua" type="server" />
+		
+    <script src="server/classes/PlayerManager.lua" type="server" />
 	<script src="server/classes/Player.lua" type="server" />
     
     <!-- Client -->
