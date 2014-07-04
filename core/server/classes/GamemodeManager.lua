@@ -81,7 +81,7 @@ function GamemodeManager:resourceStop(resource)
 		if getResourceName(resource) == "lobby" then
 			targetGamemode = self:getGamemodeFromResource(getThisResource())
 		else
-			targetGamemode = self:getGamemodeFromResource(resource)
+			targetGamemode = self:getGamemodeFromResource("lobby")
 		end
 		
 		local currentGamemode = self:getGamemodeFromResource(resource)
