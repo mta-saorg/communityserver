@@ -44,3 +44,13 @@ function Player:isMuted()
 	return false
 end
 
+
+local lGroup = "Administrator"
+-- Todo: Durch alle Spielers loopen und Permission Abfrage
+function Player:hasPermission(perm)
+	if PermissionManager:getSingleton():doesGroupExists(lGroup) then
+		local cPermission = PermissionManager:getSingleton():getPermission(lGroup)
+		return cPermission:hasEnoughtPermission(perm)
+	end
+end
+

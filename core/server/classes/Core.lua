@@ -1,20 +1,27 @@
 Core = inherit(Singleton)
 
 function Core:constructor()
+	RPC:new()
+	sql = Database:new("127.0.0.1", "root", "", "luxrp", 3306)
+	
 	-- Initialize managers
 	GamemodeManager:new()
+	PermissionManager:new()
 	PlayerManager:new()
-
-	RPC:new()
-	sql = Database:new("127.0.0.1", "", "", "", 3306)
 	
+	--Tests:
+	PermissionManager:getSingleton():createGroup("Administrator")
+	PermissionManager:getSingleton():createGroup("Spieler")
+	PermissionManager:getSingleton():addPermission("*")
+	PermissionManager:getSingleton():addPermissionToGroup("Administrator", "*")
 end
 
 function Core:destructor()
 	-- Release managers
 	delete(GamemodeManager:getSingleton())
 	delete(PlayerManager:getSingleton())
-
+	delete(PermissionManager:getSingleton())
+	
 	delete(RPC:getSingleton())
 	delete(sql)
 end
