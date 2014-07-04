@@ -34,9 +34,5 @@ end
 
 function PermissionGroup:hasEnoughtPermission(permission)
 	assert(type(permission) == "string")
-<<<<<<< HEAD
 	return (self.m_Permissions[permission] or self.m_Permissions["*"]) ~= nil
-=======
-	return self.m_Permissions[permission] ~= nil
->>>>>>> 598fad11208277c69c7cc2a24e3a6d5fc52780b5
 end

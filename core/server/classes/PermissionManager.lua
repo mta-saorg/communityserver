@@ -99,10 +99,6 @@ function PermissionManager:addPermissionToGroup(gName, permission)
 	assert(type(permission) == "string")
 	
 	if self:doesGroupExists(gName) then
-<<<<<<< HEAD
-=======
-		outputChatBox('call')
->>>>>>> 598fad11208277c69c7cc2a24e3a6d5fc52780b5
 		self:getPermission(gName):addPermission(permission)
 	end
 end

@@ -45,12 +45,9 @@ function Player:isMuted()
 end
 
 
-<<<<<<< HEAD
-local lGroup = "Spieler"
+--local lGroup = "Spieler"
 
-=======
 local lGroup = "Administrator"
->>>>>>> 598fad11208277c69c7cc2a24e3a6d5fc52780b5
 -- Todo: Durch alle Spielers loopen und Permission Abfrage
 function Player:hasPermission(perm)
 	if PermissionManager:getSingleton():doesGroupExists(lGroup) then
@@ -59,9 +56,6 @@ function Player:hasPermission(perm)
 	end
 end
 
-<<<<<<< HEAD
 addCommandHandler("t", function(player, cmd)
 	outputChatBox(tostring(player:hasPermission("cmd.bla")))
 end)
-=======
->>>>>>> 598fad11208277c69c7cc2a24e3a6d5fc52780b5
