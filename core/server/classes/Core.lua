@@ -10,6 +10,7 @@ function Core:constructor()
 	PlayerManager:new()
 	
 	--Tests:
+<<<<<<< HEAD
 	local permHandle = PermissionManager:getSingleton()
 	permHandle:createGroup("Full Administrator")
 	permHandle:createGroup("Administrator")
@@ -17,6 +18,12 @@ function Core:constructor()
 	permHandle:createGroup("Supporter")
 	permHandle:createGroup("Spieler")
 	permHandle:addPermissionToGroup("Administrator", "*")
+=======
+	PermissionManager:getSingleton():createGroup("Administrator")
+	PermissionManager:getSingleton():createGroup("Spieler")
+	PermissionManager:getSingleton():addPermission("*")
+	PermissionManager:getSingleton():addPermissionToGroup("Administrator", "*")
+>>>>>>> 598fad11208277c69c7cc2a24e3a6d5fc52780b5
 end
 
 function Core:destructor()
