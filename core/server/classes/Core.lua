@@ -1,7 +1,6 @@
 Core = inherit(Singleton)
 
 function Core:constructor()
-	RPC:new()
 	sql = Database:new(DATABASE_HOST, DATABASE_USER, DATABASE_PASSWORD, DATABASE_NAME)
 	
 	-- Initialize managers

@@ -1,7 +1,6 @@
 Core = inherit(Singleton)
 
 function Core:constructor()
-	RPC:new()
 	if DEBUG then
 		Debugging:new()
 	end

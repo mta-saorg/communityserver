@@ -24,7 +24,6 @@
 	<script src="server/Constants.lua" type="server"/>
     <script src="server/classes/Core.lua" type="server"/>
 	<script src="server/classes/Debugging.lua" type="server"/>
-    <script src="server/classes/RPC.lua" type="server"/>
     <script src="server/classes/Database.lua" type="server"/>
     <script src="server/classes/GamemodeManager.lua" type="server"/>
 	<script src="server/classes/Gamemode.lua" type="server"/>
@@ -40,7 +39,6 @@
 	<script src="client/Constants.lua" type="client"/>
     <script src="client/classes/Core.lua" type="client"/>
 	<script src="client/classes/Debugging.lua" type="client"/>
-    <script src="client/classes/RPC.lua" type="client"/>
 	<script src="client/classes/Forms/LobbyForm.lua" type="client"/>
 	
 	<!-- Files -->
