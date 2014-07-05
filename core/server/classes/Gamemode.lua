@@ -69,7 +69,7 @@ function Gamemode:addPlayer(player)
 	
 	if self:getPlayerCounter() < self:getMaxPlayer() then
 		player:setGamemode(self)
-		self:broadcastMessage(("[Lobby]: %s has joined Lobby \"%s\"! (%d/%d)"):format(player:getName(), self.m_Name, self:getPlayerCounter(), self:getMaxPlayer()))
+		self:broadcastMessage(("#0678ee[Lobby]: #d9d9d9%s #d9d9d9has joined Lobby \"#0678ee%s#d9d9d9\"! (%d/%d)"):format(player:getName(), self.m_Name, self:getPlayerCounter(), self:getMaxPlayer()), 0, 0, 0, true)
 
 		if getResourceName(self:getResource()) ~= "core" then
 			call(self:getResource(), "onPlayerJoinLobby", player)
@@ -91,7 +91,7 @@ function Gamemode:removePlayer(player)
 		self.m_Players[player] = nil
 		self.m_PlayerCount = self.m_PlayerCount - 1
 		
-		self:broadcastMessage(("[Lobby]: %s has left the Lobby! (Resource: %s)"):format(player:getName(), getResourceName(self:getResource())))
+		self:broadcastMessage(("#0678ee[Lobby]: #d9d9d9%s #d9d9d9left the Lobby!"):format(player:getName()), 0, 0, 0, true)
 		if getResourceName(self:getResource()) ~= "core" then
 			call(self:getResource(), "onPlayerQuitLobby", player)
 		end
