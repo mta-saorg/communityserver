@@ -8,8 +8,6 @@ function Core:constructor()
 end
 
 function Core:destructor()
-	delete(RPC:getSingleton())
-	
 	if DEBUG then
 		delete(Debugging:getSingleton())
 	end

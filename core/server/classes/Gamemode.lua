@@ -1,6 +1,6 @@
 Gamemode = inherit(Object)
 
-function Gamemode:constructor(resource, bNeededProperties)
+function Gamemode:constructor(resource, bNeededProperties, iID)
 	if bNeededProperties then
 		-- take over the gamemode's properties
 		local info = exports[resource]:getGamemodeInfo()
@@ -21,20 +21,35 @@ function Gamemode:constructor(resource, bNeededProperties)
 	self.m_Resource = resource
 	self.m_Players = {}
 	self.m_PlayerCount = 0
+	self.m_ID = iID
 	
 	self.m_Position = Vector3(self.m_Position) -- 1.4 HACK (remove as soon as fix from r6648 is available)
-	self.m_EnterMarker = Marker.create(self.m_Position, "cylinder", 2)
+	self.m_EnterMarker = Marker.create(self.m_Position, "cylinder", 2, 255, 90, 0)
+	
+	if self.m_Blip then
+		self.m_BlipElement = Blip.create(self.m_Position, self.m_Blip)
+	end
+	
 	addEventHandler("onMarkerHit", self.m_EnterMarker,
 		function(hitElement, matchingDimension)
 			if getElementType(hitElement) == "player" and matchingDimension then
-				hitElement:triggerEvent("lobbyWindowOpen", self.m_Name, self.m_Author, self.m_Description, self.m_Players)
+				if hitElement:getGamemode() ~= self then
+					hitElement:triggerEvent("lobbyWindowOpen", self.m_ID, self.m_Name, self.m_Author, self.m_Description, self:getPlayers(), self.m_MaxPlayer)
+				else
+					outputChatBox("Du bist bereits in diesem Gamemode!", hitElement, 255, 100, 100)
+				end
 			end
 		end
 	)
 end
 
 function Gamemode:destructor()
-	
+	if self.m_EnterMarker then
+		self.m_EnterMarker:destroy()
+	end
+	if self.m_BlipElement then
+		self.m_BlipElement:destroy()
+	end
 end
 
 function Gamemode:setInfo(key, val)
@@ -49,8 +64,9 @@ function Gamemode:getInfo(arg)
 	end
 	return {
 		Name = self.m_Name,
-		Desc = self.m_Desc,
+		Desc = self.m_Description,
 		maxPlayer = self.m_MaxPlayer,
+		minPlayer = self.m_MinPlayer
 	}
 end
 
@@ -58,16 +74,8 @@ function Gamemode:getResource()
 	return self.m_Resource
 end
 
-function Gamemode:getMaxPlayer()
-	return self.m_MaxPlayer
-end
-
 function Gamemode:getPlayers()
 	return self.m_Players
-end
-
-function Gamemode:getPlayerCounter()
-	return self.m_PlayerCount
 end
 
 function Gamemode:addPlayer(player)
@@ -76,17 +84,15 @@ function Gamemode:addPlayer(player)
 		self.m_PlayerCount = self.m_PlayerCount + 1
 	end
 	
-	if self:getPlayerCounter() < self:getMaxPlayer() then
+	if self.m_PlayerCount < self.m_MaxPlayer then
 		player:setGamemode(self)
-		self:broadcastMessage(("#0678ee[Lobby]: #d9d9d9%s #d9d9d9has joined Lobby \"#0678ee%s#d9d9d9\"! (%d/%d)"):format(player:getName(), self.m_Name, self:getPlayerCounter(), self:getMaxPlayer()), 0, 0, 0, true)
 
-		if getResourceName(self:getResource()) ~= "core" then
-			call(self:getResource(), "onPlayerJoinLobby", player)
+		if getResourceName(self.m_Resource) ~= "core" then
+			self:broadcastMessage(("#0678ee* #d9d9d9%s #d9d9d9has joined Gamemode #0678ee%s#d9d9d9 (%d/%d) #0678ee*"):format(player:getName(), self.m_Name, self.m_PlayerCount, self.m_MaxPlayer), 0, 0, 0, true)
+			call(self:getResource(), "onPlayerJoinGamemode", player)
 		end
 		return true
 	end
-	
-	return false
 end
 
 function Gamemode:broadcastMessage(msg, r, g, b, colorcoded)
@@ -100,9 +106,9 @@ function Gamemode:removePlayer(player)
 		self.m_Players[player] = nil
 		self.m_PlayerCount = self.m_PlayerCount - 1
 		
-		self:broadcastMessage(("#0678ee[Lobby]: #d9d9d9%s #d9d9d9left the Lobby!"):format(player:getName()), 0, 0, 0, true)
-		if getResourceName(self:getResource()) ~= "core" then
-			call(self:getResource(), "onPlayerQuitLobby", player)
+		if getResourceName(self.m_Resource) ~= "core" then
+			self:broadcastMessage(("#0678ee* #d9d9d9%s #d9d9d9left the Gamemode #0678ee*"):format(player:getName()), 0, 0, 0, true)
+			call(self:getResource(), "onPlayerQuitGamemode", player)
 		end
 	end
 end

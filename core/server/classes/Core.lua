@@ -31,7 +31,6 @@ function Core:destructor()
 	delete(PlayerManager:getSingleton())
 	delete(PermissionManager:getSingleton())
 	
-	delete(RPC:getSingleton())
 	delete(sql)
 	
 	if DEBUG then

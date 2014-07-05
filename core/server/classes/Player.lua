@@ -18,6 +18,10 @@ function Player:constructor()
 	)
 end
 
+function Player:triggerEvent(eventName, ...)
+	triggerClientEvent(self, eventName, resourceRoot, ...)
+end
+
 function Player:setGamemode(gamemode)
 	self.m_Gamemode = gamemode
 end

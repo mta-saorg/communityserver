@@ -1,18 +1,16 @@
-function onPlayerJoinLobby(player)
-	
-	outputChatBox(("DEBUG: onPlayerJoinLobby (Resource: %s)"):format(getResourceName(getThisResource())))
-	
-	-- Tests
-	--[[
-	local players = getPlayers()
-	if players then
-		for player in pairs(players) do
-			outputChatBox(getPlayerName(player))
-		end
-	end
-	]]
+function getGamemodeInfo()
+	return {
+		Name = "Lobby (Freeroam)",
+		Desc = "Dies ist das Hauptgamemode der Core Resource. Hier können Spielers durch die gegend Fahren oder einem anderem Gamemode beitreten",
+		MaxPlayer = 32,
+		MinPlayer = 1
+	}
 end
 
-function onPlayerQuitLobby(player)
-	outputChatBox(("DEBUG: onPlayerQuitLobby (Resource: %s)"):format(getResourceName(getThisResource())))
+function onPlayerJoinGamemode(player)
+	
+end
+
+function onPlayerQuitGamemode(player)
+
 end

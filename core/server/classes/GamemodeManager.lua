@@ -3,9 +3,10 @@ GamemodeManager = inherit(Singleton)
 function GamemodeManager:constructor()
 	-- some forward declaration 
 	self.m_Gamemodes = {}
+	self.m_Counter = 0
 	
 	-- register the waiting area ( hacky )
-	self.m_Gamemodes[getThisResource()] = Gamemode:new(getThisResource(), false)
+	self.m_Gamemodes[getThisResource()] = Gamemode:new(getThisResource(), false, 0)
 	
 	-- move every player into the waiting area
 	for _, player in pairs(getElementsByType("player")) do
@@ -13,8 +14,17 @@ function GamemodeManager:constructor()
 	end
 	
 	-- add the event handlers
+	addEvent("onGamemodeJoin", true)
 	addEventHandler("onResourceStart", root, bind(self.Event_resourceStart, self))
 	addEventHandler("onResourceStop", root, bind(self.Event_resourceStop, self))
+	addEventHandler("onGamemodeJoin", root, bind(self.Event_onGamemodeJoin, self))
+	
+	-- restart all running modes
+	for idx, resource in ipairs(getResources()) do 
+		if getResourceInfo(resource, "type") == "mode" and getResourceState(resource) == "running" then
+			restartResource(resource)
+		end
+	end
 end
 
 function GamemodeManager:destructor()
@@ -35,17 +45,26 @@ function GamemodeManager:getGamemodeFromResource(argument)
 				return self.m_Gamemodes[resource]
 			end
 		end
-		
 	elseif type(argument) == "userdata" then
 		return self.m_Gamemodes[argument]
-		
+	end
+end
+
+function GamemodeManager:getGamemodeFromID(gamemodeID)
+	assert(type(gamemodeID) == "number", "Bad Argument @GamemodeManager.getGamemodeFromID")
+	
+	for resource, gamemode in pairs(self.m_Gamemodes) do
+		if gamemode:getInfo("ID") == gamemodeID then
+			return gamemode
+		end
 	end
 end
 
 function GamemodeManager:registerGamemode(resource)
 	if not self.m_Gamemodes[resource] then
 		-- create a new gamemode
-		self.m_Gamemodes[resource] = Gamemode:new(resource, true)
+		self.m_Counter = self.m_Counter + 1
+		self.m_Gamemodes[resource] = Gamemode:new(resource, true, self.m_Counter)
 		outputServerLog(("[GamemodeManager]: Added Gamemode %s (Resource: %s)"):format(self:getGamemodeFromResource(resource).m_Name, getResourceName(resource)))
 		
 	end
@@ -82,13 +101,12 @@ function GamemodeManager:Event_resourceStop(resource)
 	if getResourceInfo(resource, "type") == "mode" then
 	
 		local targetGamemode = nil
+		local currentGamemode = self:getGamemodeFromResource(resource)
 		if getResourceName(resource) == "lobby" then
 			targetGamemode = self:getGamemodeFromResource(getThisResource())
 		else
 			targetGamemode = self:getGamemodeFromResource("lobby")
 		end
-		
-		local currentGamemode = self:getGamemodeFromResource(resource)
 		
 		if currentGamemode and targetGamemode then
 			if currentGamemode:getPlayerCounter() >= 1 then
@@ -99,12 +117,24 @@ function GamemodeManager:Event_resourceStop(resource)
 				end
 			end
 		end
+		
 		-- unregister the gamemode
 		self:unregisterGamemode(resource)
-		
 	end
 end
 
+function GamemodeManager:Event_onGamemodeJoin(gamemodeID)
+	if type(gamemodeID) == "number" then
+		local gamemode = self:getGamemodeFromID(gamemodeID)
+		if gamemode then
+			local currentGamemode = client:getGamemode()
+			if currentGamemode ~= gamemode then
+				currentGamemode:removePlayer(client)
+				gamemode:addPlayer(client)
+			end
+		end
+	end
+end
 
 -- BETA COMMANDS
 addCommandHandler("jl",
