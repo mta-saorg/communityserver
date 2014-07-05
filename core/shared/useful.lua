@@ -1,14 +1,4 @@
-﻿function removeHexCodes(str)
-	assert(type(str) == 'string', 'Bad Argument @removeHexCodes')
-	
-	return str:gsub('#%x%x%x%x%x%x', '')
-end
-
-function isNumric(number)
-	return tonumber(number) ~= false
-end
-
-function getCurrentTime(timestamp)
+﻿function getCurrentTime(timestamp)
 	if type(timestamp) ~= 'number' then
 		timestamp = getRealTime().timestamp
 	end
@@ -24,37 +14,6 @@ function getCurrentDate(timestamp)
 	
 	timestamp = getRealTime(timestamp)
 	return ('%02d.%02d.%d'):format(timestamp.monthday, timestamp.month + 1, timestamp.year + 1900)
-end
-
--- Element Functions
-function getElementSpeed(element,unit)
-	if (unit == nil) then unit = 0 end
-	if (isElement(element)) then
-		local x,y,z = getElementVelocity(element)
-		if (unit=="mph" or unit==1 or unit =='1') then
-			return (x^2 + y^2 + z^2) ^ 0.5 * 100
-		else
-			return (x^2 + y^2 + z^2) ^ 0.5 * 1.8 * 100
-		end
-	else
-		outputDebugString("Not an element. Can't get speed")
-		return false
-	end
-end
-
-function setElementSpeed(element, unit, speed)
-	if (unit == nil) then unit = 0 end
-	if (speed == nil) then speed = 0 end
-	speed = tonumber(speed)
-	local acSpeed = getElementSpeed(element, unit)
-	if (acSpeed~=false) then
-		local diff = speed/acSpeed
-		local x,y,z = getElementVelocity(element)
-		setElementVelocity(element,x*diff,y*diff,z*diff)
-		return true
-	end
- 
-	return false
 end
 
 -- Math Functions
@@ -73,6 +32,14 @@ function table.copy(tab, recursive)
         else ret[key] = value end
     end
     return ret
+end
+
+function table.size(tab)
+	local i = 0
+	for k in pairs(tab) do
+		i = i + 1
+	end
+	return i
 end
 
 function table.compare( a1, a2 )
@@ -142,3 +109,60 @@ function table.merge(table1,...)
     return table1
 end
 
+-- Hacked in from runcode
+function runString (commandstring, outputTo, source)
+	local sourceName
+	if source then
+		sourceName = getPlayerName(source)
+	else
+		sourceName = "Console"
+	end
+	outputChatBox(sourceName.." executed command: "..commandstring)
+	local notReturned
+	--First we test with return
+	local commandFunction,errorMsg = loadstring("return "..commandstring)
+	if errorMsg then
+		--It failed.  Lets try without "return"
+		notReturned = true
+		commandFunction, errorMsg = loadstring(commandstring)
+	end
+	if errorMsg then
+		--It still failed.  Print the error message and stop the function
+		outputChatBox("Error: "..errorMsg)
+		return
+	end
+	--Finally, lets execute our function
+	results = { pcall(commandFunction) }
+	if not results[1] then
+		--It failed.
+		outputChatBox("Error: "..results[2])
+		return
+	end
+	if not notReturned then
+		local resultsString = ""
+		local first = true
+		for i = 2, #results do
+			if first then
+				first = false
+			else
+				resultsString = resultsString..", "
+			end
+			local resultType = type(results[i])
+			if isElement(results[i]) then
+				resultType = "element:"..getElementType(results[i])
+			end
+			resultsString = resultsString..tostring(results[i]).." ["..resultType.."]"
+		end
+		outputChatBox("Command results: "..resultsString)
+	elseif not errorMsg then
+		outputChatBox("Command executed!")
+	end
+end
+
+function outputDebug(errmsg)
+	if DEBUG then
+		outputDebugString((triggerServerEvent and "CLIENT " or "SERVER ")..tostring(errmsg))
+	end
+end
+
+LOREM_IPSUM = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."

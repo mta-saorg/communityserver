@@ -2,12 +2,15 @@ Core = inherit(Singleton)
 
 function Core:constructor()
 	RPC:new()
-	sql = Database:new("127.0.0.1", "user", "pass", "database", 3306)
+	sql = Database:new(DATABASE_HOST, DATABASE_USER, DATABASE_PASSWORD, DATABASE_NAME)
 	
 	-- Initialize managers
 	GamemodeManager:new()
 	PermissionManager:new()
 	PlayerManager:new()
+	if DEBUG then
+		Debugging:new()
+	end
 	
 	--Tests:
 	local permHandle = PermissionManager:getSingleton()
@@ -17,10 +20,10 @@ function Core:constructor()
 	permHandle:createGroup("Supporter")
 	permHandle:createGroup("Spieler")
 	permHandle:addPermissionToGroup("Administrator", "*")
-	PermissionManager:getSingleton():createGroup("Administrator")
-	PermissionManager:getSingleton():createGroup("Spieler")
-	PermissionManager:getSingleton():addPermission("*")
-	PermissionManager:getSingleton():addPermissionToGroup("Administrator", "*")
+	permHandle:createGroup("Administrator")
+	permHandle:createGroup("Spieler")
+	permHandle:addPermission("*")
+	permHandle:addPermissionToGroup("Administrator", "*")
 end
 
 function Core:destructor()
@@ -31,6 +34,10 @@ function Core:destructor()
 	
 	delete(RPC:getSingleton())
 	delete(sql)
+	
+	if DEBUG then
+		delete(Debugging:getSingleton())
+	end
 end
 
 function Core:setPlayerInfo(player, key, value)
@@ -43,22 +50,3 @@ end
 
 export(Core, "setPlayerInfo")
 export(Core, "getPlayerInfo")
-
-
-
--- Dev
-------
-
-addCommandHandler("drun", function (player, command, ...)
-	local commandstring = table.concat({...}, " ")
-	outputChatBox(("Executing code: %s"):format(commandstring), player, 255, 100, 100)
-	local ret, err = loadstring("return "..commandstring)
-	if err then
-		ret, err = loadstring(commandstring)
-	end
-	if not err then
-		outputChatBox(("Command result: %s"):format(tostring(pcall(ret))), player, 255, 100, 100)
-	else
-		outputChatBox(("Executing failed: %s"):format(err), player, 255, 100, 100)
-	end
-end)
