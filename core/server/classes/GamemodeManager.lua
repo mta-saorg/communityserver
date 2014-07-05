@@ -13,8 +13,8 @@ function GamemodeManager:constructor()
 	end
 	
 	-- add the event handlers
-	addEventHandler("onResourceStart", root, bind(self.resourceStart, self))
-	addEventHandler("onResourceStop", root, bind(self.resourceStop, self))
+	addEventHandler("onResourceStart", root, bind(self.Event_resourceStart, self))
+	addEventHandler("onResourceStop", root, bind(self.Event_resourceStop, self))
 end
 
 function GamemodeManager:destructor()
@@ -63,7 +63,7 @@ function GamemodeManager:unregisterGamemode(resource)
 	end
 end
 
-function GamemodeManager:resourceStart(resource)
+function GamemodeManager:Event_resourceStart(resource)
 	if getResourceInfo(resource, "type") == "mode" then
 		-- register the gamemode
 		self:registerGamemode(resource)
@@ -78,7 +78,7 @@ function GamemodeManager:resourceStart(resource)
 	end
 end
 
-function GamemodeManager:resourceStop(resource)
+function GamemodeManager:Event_resourceStop(resource)
 	if getResourceInfo(resource, "type") == "mode" then
 	
 		local targetGamemode = nil
@@ -90,7 +90,7 @@ function GamemodeManager:resourceStop(resource)
 		
 		local currentGamemode = self:getGamemodeFromResource(resource)
 		
-		if(currentGamemode and targetGamemode) then
+		if currentGamemode and targetGamemode then
 			if currentGamemode:getPlayerCounter() >= 1 then
 				for player in pairs(currentGamemode:getPlayers()) do 
 					-- transfer all player into the new gamemode
@@ -105,6 +105,7 @@ function GamemodeManager:resourceStop(resource)
 	end
 end
 
+
 -- BETA COMMANDS
 addCommandHandler("jl",
 	function(p, cmd, gm)
@@ -112,11 +113,3 @@ addCommandHandler("jl",
 		GamemodeManager:getSingleton():getGamemodeFromResource(getResourceFromName(gm)):addPlayer(p)
 	end
 )
-
-function getGamemodePlayers()
-	local GM = GamemodeManager:getSingleton():getGamemodeFromResource(sourceResource)
-	if GM then
-		return GM:getPlayers()
-	end
-	return false
-end

@@ -5,6 +5,7 @@ function Core:constructor()
 	if DEBUG then
 		Debugging:new()
 	end
+	LobbyForm:new()
 end
 
 function Core:destructor()

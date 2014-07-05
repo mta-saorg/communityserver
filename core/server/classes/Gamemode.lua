@@ -11,7 +11,7 @@ function Gamemode:constructor(resource, bNeededProperties)
 	else
 		-- emergency/default properties
 		self.m_Name = "None"
-		self.m_Desc = ""
+		self.m_Description = ""
 		self.m_MaxPlayer = getMaxPlayers()
 		self.m_MinPlayer = -1
 		
@@ -22,6 +22,15 @@ function Gamemode:constructor(resource, bNeededProperties)
 	self.m_Players = {}
 	self.m_PlayerCount = 0
 	
+	self.m_Position = Vector3(self.m_Position) -- 1.4 HACK (remove as soon as fix from r6648 is available)
+	self.m_EnterMarker = Marker.create(self.m_Position, "cylinder", 2)
+	addEventHandler("onMarkerHit", self.m_EnterMarker,
+		function(hitElement, matchingDimension)
+			if getElementType(hitElement) == "player" and matchingDimension then
+				hitElement:triggerEvent("lobbyWindowOpen", self.m_Name, self.m_Author, self.m_Description, self.m_Players)
+			end
+		end
+	)
 end
 
 function Gamemode:destructor()

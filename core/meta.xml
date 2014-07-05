@@ -36,11 +36,15 @@
 	<script src="server/classes/Player.lua" type="server" />
     
     <!-- Client -->
-    <script src="client/Main.lua" type="client" />
+    <script src="client/Main.lua" type="client"/>
 	<script src="client/Constants.lua" type="client"/>
-    <script src="client/classes/Core.lua" type="client" />
+    <script src="client/classes/Core.lua" type="client"/>
 	<script src="client/classes/Debugging.lua" type="client"/>
-    <script src="client/classes/RPC.lua" type="client" />
+    <script src="client/classes/RPC.lua" type="client"/>
+	<script src="client/classes/Forms/LobbyForm.lua" type="client"/>
+	
+	<!-- Files -->
+	<file src="files/images/Game.png"/>
 	
 	<!-- Exports -->
     <export function="export_setPlayerInfo" type="server" http="false" />
