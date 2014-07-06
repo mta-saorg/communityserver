@@ -34,7 +34,7 @@ function Gamemode:constructor(resource, bNeededProperties, iID)
 		function(hitElement, matchingDimension)
 			if getElementType(hitElement) == "player" and matchingDimension then
 				if hitElement:getGamemode() ~= self then
-					hitElement:triggerEvent("lobbyWindowOpen", self.m_ID, self.m_Name, self.m_Author, self.m_Description, self:getPlayers(), self.m_MaxPlayer)
+					hitElement:triggerEvent("onGamemodeWindowOpen", self:getInfo(), self:getPlayers())
 				else
 					outputChatBox("Du bist bereits in diesem Gamemode!", hitElement, 255, 100, 100)
 				end
@@ -63,10 +63,12 @@ function Gamemode:getInfo(arg)
 		return self["m_"..arg]
 	end
 	return {
+		ID = self.m_ID,
 		Name = self.m_Name,
-		Desc = self.m_Description,
-		maxPlayer = self.m_MaxPlayer,
-		minPlayer = self.m_MinPlayer
+		Author = self.m_Author,
+		Description = self.m_Description,
+		MaxPlayers = self.m_MaxPlayer,
+		MinPlayers = self.m_MinPlayer
 	}
 end
 

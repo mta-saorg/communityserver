@@ -26,13 +26,13 @@ function LobbyForm:constructor()
 	addEventHandler("onClientGUIClick", self.m_ButtonClose, function() self:close() end, false)
 	
 	-- Da es sich um eine Singleton-Klasse handelt, wird der Konstruktur nur einmalig aufgerufen und folgendes ist in Ordnung
-	addEvent("lobbyWindowOpen", true)
-	addEventHandler("lobbyWindowOpen", root,
-		function(id, name, author, description, players, maxPlayers)
-			self.m_CurrentId = id
-			self.m_GamemodeName:setText(name)
-			self.m_GamemodeAuthor:setText(author)
-			self.m_GamemodeDescription:setText(description)
+	addEvent("onGamemodeWindowOpen", true)
+	addEventHandler("onGamemodeWindowOpen", root,
+		function(info, players)
+			self.m_CurrentId = info.ID
+			self.m_GamemodeName:setText(info.Name)
+			self.m_GamemodeAuthor:setText(info.Author)
+			self.m_GamemodeDescription:setText(info.Description)
 			
 			guiGridListClear(self.m_GridPlayers)
 			local counter = 0
@@ -42,7 +42,7 @@ function LobbyForm:constructor()
 				guiGridListSetItemText(self.m_GridPlayers, row, 1, string.gsub(player:getName(), "#%x%x%x%x%x%x", ""), false, false)
 				counter = counter + 1
 			end
-			self.m_PlayerCount:setText(("%d / %d"):format(counter, maxPlayers))
+			self.m_PlayerCount:setText(("%d / %d"):format(counter, info.MaxPlayers))
 			
 			self:open()
 		end

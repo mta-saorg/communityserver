@@ -29,7 +29,7 @@ end
 
 function GamemodeManager:destructor()
 	-- release all created gamemodes
-	for resource, gamemode in pairs(self.m_Gamemodes) do
+	for resource, gamemode in pairs(self:getGamemodes()) do
 		delete(gamemode)
 	end
 end
@@ -40,20 +40,20 @@ end
 
 function GamemodeManager:getGamemodeFromResource(argument)
 	if type(argument) == "string" then
-		for resource in pairs(self.m_Gamemodes) do 
+		for resource in pairs(self:getGamemodes()) do 
 			if getResourceName(resource) == argument then
-				return self.m_Gamemodes[resource]
+				return self:getGamemodes()[resource]
 			end
 		end
 	elseif type(argument) == "userdata" then
-		return self.m_Gamemodes[argument]
+		return self:getGamemodes()[argument]
 	end
 end
 
 function GamemodeManager:getGamemodeFromID(gamemodeID)
 	assert(type(gamemodeID) == "number", "Bad Argument @GamemodeManager.getGamemodeFromID")
 	
-	for resource, gamemode in pairs(self.m_Gamemodes) do
+	for resource, gamemode in pairs(self:getGamemodes()) do
 		if gamemode:getInfo("ID") == gamemodeID then
 			return gamemode
 		end
@@ -65,7 +65,7 @@ function GamemodeManager:registerGamemode(resource)
 		-- create a new gamemode
 		self.m_Counter = self.m_Counter + 1
 		self.m_Gamemodes[resource] = Gamemode:new(resource, true, self.m_Counter)
-		outputServerLog(("[GamemodeManager]: Added Gamemode %s (Resource: %s)"):format(self:getGamemodeFromResource(resource).m_Name, getResourceName(resource)))
+		outputServerLog(("[GamemodeManager]: Added Gamemode %s (Resource: %s)"):format(self:getGamemodeFromResource(resource):getInfo("Name"), getResourceName(resource)))
 		
 	end
 end
@@ -109,7 +109,7 @@ function GamemodeManager:Event_resourceStop(resource)
 		end
 		
 		if currentGamemode and targetGamemode then
-			if currentGamemode:getPlayerCounter() >= 1 then
+			if currentGamemode.m_PlayerCount >= 1 then
 				for player in pairs(currentGamemode:getPlayers()) do 
 					-- transfer all player into the new gamemode
 					currentGamemode:removePlayer(player)
