@@ -1,51 +1,58 @@
 <meta>
-    <info 
-		auhor="mta-sa.org"
+	<info
+		author="mta-sa.org"
 		name="Core resource"
 		description="mta-sa.org communityserver core resource"
 	/>
 	<min_mta_version client="1.4.0" server="1.4.0-9.06647"/>
 	<include resource="lobby"/>
-    <oop>true</oop>
-    
-    <!-- Shared -->
-    <script src="shared/classlib.lua" type="shared" />
-    <script src="shared/importexport.lua" type="shared" />
-    <script src="shared/useful.lua" type="shared" />
+	<oop>true</oop>
+
+	<!-- Shared -->
+	<script src="shared/classlib.lua" type="shared" />
+	<script src="shared/importexport.lua" type="shared" />
+	<script src="shared/useful.lua" type="shared" />
 	<script src="shared/Constants.lua" type="shared"/>
 	<script src="shared/ooploader.lua" type="shared"/>
-    <script src="shared/classes/Object.lua" type="shared" />
-    <script src="shared/classes/Singleton.lua" type="shared" />
-    <script src="shared/classes/TimedPulse.lua" type="shared" />
-    <script src="shared/classes/File.lua" type="shared" />
-    
-    <!-- Server -->
-    <script src="server/Main.lua" type="server" />
+	<script src="shared/classes/Object.lua" type="shared" />
+	<script src="shared/classes/Singleton.lua" type="shared" />
+	<script src="shared/classes/TimedPulse.lua" type="shared" />
+	<script src="shared/classes/File.lua" type="shared" />
+
+	<!-- Server -->
+	<script src="server/Main.lua" type="server" />
 	<script src="server/Constants.lua" type="server"/>
-    <script src="server/classes/Core.lua" type="server"/>
+	<script src="server/classes/Core.lua" type="server"/>
 	<script src="server/classes/Debugging.lua" type="server"/>
-    <script src="server/classes/Database.lua" type="server"/>
-    <script src="server/classes/GamemodeManager.lua" type="server"/>
+	<script src="server/classes/Database.lua" type="server"/>
+	<script src="server/classes/GamemodeManager.lua" type="server"/>
 	<script src="server/classes/Gamemode.lua" type="server"/>
-	
+
 	<script src="server/classes/PermissionManager.lua" type="server" />
 	<script src="server/classes/PermissionGroup.lua" type="server" />
-		
-    <script src="server/classes/PlayerManager.lua" type="server" />
+
+	<script src="server/classes/PlayerManager.lua" type="server" />
 	<script src="server/classes/Player.lua" type="server" />
-    
-    <!-- Client -->
-    <script src="client/Main.lua" type="client"/>
+
+	<!-- Client -->
+	<script src="client/Main.lua" type="client"/>
 	<script src="client/Constants.lua" type="client"/>
-    <script src="client/classes/Core.lua" type="client"/>
+	<script src="client/classes/Core.lua" type="client"/>
 	<script src="client/classes/Debugging.lua" type="client"/>
 	<script src="client/classes/Forms/LobbyForm.lua" type="client"/>
-	
+
 	<!-- Files -->
 	<file src="files/images/Game.png"/>
-	
+
 	<!-- Exports -->
-    <export function="export_setPlayerInfo" type="server" http="false" />
-    <export function="export_getPlayerInfo" type="server" http="false" />
-    <export function="getOOPWrapperCode" type="shared" http="false" />
+	<export function="export_setPlayerInfo" type="server" http="false" />
+	<export function="export_getPlayerInfo" type="server" http="false" />
+	<export function="getOOPWrapperCode" type="shared" http="false" />
+
+	<!-- ACL-Requests -->
+	<aclrequest>
+		<right name="function.startResource" access="true" />
+		<right name="function.stopResource" access="true" />
+		<right name="function.restartResource" access="true" />
+	</aclrequest>
 </meta>
