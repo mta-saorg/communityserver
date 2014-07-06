@@ -14,7 +14,7 @@ eineFunktion(1, 2, 3)
 ```
 
 ### Klammern und Leerzeichen bei if-, for-, while-, repeat-until-Blöcken
-Klammern werden, wenn sie nicht notwendig sind, um den Vorrang zu verändern, nicht geschrieben. Leerzeichen werden außerdem, wie bei Funktionen weggelassen.
+Klammern werden, wenn sie nicht notwendig sind um den Vorrang zu verändern, nicht geschrieben. Leerzeichen werden außerdem, wie bei Funktionen weggelassen.
 
 #### Beispiel
 ```lua
@@ -53,7 +53,7 @@ Da Lua dynamisch typisiert ist, macht eine vollständige Umsetzung der ungarisch
 Eine eingeschränkte Variante mag jedoch sinnvoll sein für:
 * Membervariablen (Präfix: `m_`)
 * Klassenvariablen (Präfix: `ms_`)
-Zusätzlich wird für Klassen- sowieso Membernamen die *UpperCamelCase-* und für Methoden-, Funktions- sowie lokalen Variablen die *lowerCamcelCase-*Notation verwendet.
+Zusätzlich wird für Klassen- sowieso Membernamen die *UpperCamelCase-* und für Methoden-, Funktions- sowie lokalen Variablen die *lowerCamelCase-*Notation verwendet.
 
 #### Beispiel
 ```lua
@@ -80,7 +80,7 @@ Semikola werden an Zeilenenden weggelassen.
 Es werden Double Quotes (`" "`) verwendet.
 
 ### Anonyme Funktionen
-Anonyme Fuktionen werden mit einem Zeilenumbruch eingeleitet.
+Anonyme Funktionen werden mit einem Zeilenumbruch eingeleitet.
 
 ```lua
 addEventHandler("onClientRender", root,
