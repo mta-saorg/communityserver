@@ -23,24 +23,26 @@ function Gamemode:constructor(resource, bNeededProperties, iID)
 	self.m_PlayerCount = 0
 	self.m_ID = iID
 	
-	self.m_Position = Vector3(self.m_Position) -- 1.4 HACK (remove as soon as fix from r6648 is available)
-	self.m_EnterMarker = Marker.create(self.m_Position, "cylinder", 2, 255, 90, 0)
-	
 	if self.m_Blip then
 		self.m_BlipElement = Blip.create(self.m_Position, self.m_Blip)
 	end
 	
-	addEventHandler("onMarkerHit", self.m_EnterMarker,
-		function(hitElement, matchingDimension)
-			if getElementType(hitElement) == "player" and matchingDimension then
-				if hitElement:getGamemode() ~= self then
-					hitElement:triggerEvent("onGamemodeWindowOpen", self:getInfo(), self:getPlayers())
-				else
-					outputChatBox("Du bist bereits in diesem Gamemode!", hitElement, 255, 100, 100)
+	if self.m_Position then
+		self.m_Position = Vector3(self.m_Position) -- 1.4 HACK (remove as soon as fix from r6648 is available)
+		self.m_EnterMarker = Marker.create(self.m_Position, "cylinder", 2, 255, 90, 0)
+			
+		addEventHandler("onMarkerHit", self.m_EnterMarker,
+			function(hitElement, matchingDimension)
+				if getElementType(hitElement) == "player" and matchingDimension then
+					if hitElement:getGamemode() ~= self then
+						hitElement:triggerEvent("onGamemodeWindowOpen", self:getInfo(), self:getPlayers())
+					else
+						outputChatBox("Du bist bereits in diesem Gamemode!", hitElement, 255, 100, 100)
+					end
 				end
 			end
-		end
-	)
+		)
+	end
 end
 
 function Gamemode:destructor()

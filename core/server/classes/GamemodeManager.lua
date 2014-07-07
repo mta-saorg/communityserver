@@ -135,11 +135,3 @@ function GamemodeManager:Event_onGamemodeJoin(gamemodeID)
 		end
 	end
 end
-
--- BETA COMMANDS
-addCommandHandler("jl",
-	function(p, cmd, gm)
-		p:getGamemode():removePlayer(p)
-		GamemodeManager:getSingleton():getGamemodeFromResource(getResourceFromName(gm)):addPlayer(p)
-	end
-)

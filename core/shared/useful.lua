@@ -117,7 +117,7 @@ function runString (commandstring, outputTo, source)
 	else
 		sourceName = "Console"
 	end
-	outputChatBox(sourceName.." executed command: "..commandstring, root)
+	outputChatBox(sourceName.." executed command: "..commandstring)
 	local notReturned
 	--First we test with return
 	local commandFunction,errorMsg = loadstring("return "..commandstring)
