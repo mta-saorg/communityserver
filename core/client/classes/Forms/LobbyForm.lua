@@ -1,5 +1,8 @@
 LobbyForm = inherit(Singleton)
-GuiGridList = GuiGridlist
+
+if not GuiGridList then
+	GuiGridList = GuiGridlist
+end
 
 function LobbyForm:constructor()
 	self.m_Window = guiCreateWindow(screenWidth/2-435/2, screenHeight/2-351/2, 435, 351, "Gamemode wechseln", false)
