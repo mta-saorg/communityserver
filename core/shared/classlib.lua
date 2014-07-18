@@ -255,13 +255,13 @@ oop.getMTATypeMetatable = function(t)
 	elseif t == "pickup" then element = createPickup(0, 0, 0, 0, 0)
 	elseif t == "radarArea" then element = createRadarArea(0, 0, 1, 1)
 	elseif t == "water" then element = createWater(0, 0, 0, 2, 2, 2, 4, 4, 4)
-	elseif t == "weapon" then element = createWeapon("m4", 0, 0, 0)
 	elseif SERVER then
 		if t == "team" then element = createTeam("oopteam") end
 	elseif CLIENT then
 		if t == "sound" then element = playSFX("feet", 1, 1) 
 		elseif t == "camera" then return debug.getmetatable(getCamera())
 		elseif t == "effect" then element = createEffect("fire", 0, 0, 0)
+	     	elseif t == "weapon" then element = createWeapon("m4", 0, 0, 0)
 			-- todo: check if GUI elements have OOP
 		end
 	end
@@ -328,7 +328,6 @@ oop.initClasses = function()
 	oop.mta_metatable["pickup"] = oop.getMTATypeMetatable("pickup")
 	oop.mta_metatable["radarArea"] = oop.getMTATypeMetatable("radarArea")
 	oop.mta_metatable["water"] = oop.getMTATypeMetatable("water")
-	oop.mta_metatable["weapon"] = oop.getMTATypeMetatable("weapon")
 	
 	if SERVER then
 		oop.mta_metatable["team"] = oop.getMTATypeMetatable("team")
@@ -338,6 +337,7 @@ oop.initClasses = function()
 		oop.mta_metatable["sound"] = oop.getMTATypeMetatable("sound")
 		oop.mta_metatable["camera"] = oop.getMTATypeMetatable("camera")
 		oop.mta_metatable["effect"] = oop.getMTATypeMetatable("effect")
+		oop.mta_metatable["weapon"] = oop.getMTATypeMetatable("weapon")
 	end
 	
 	for k, v in pairs(oop.mta_metatable) do
