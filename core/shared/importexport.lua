@@ -1,6 +1,6 @@
 function export(class, funcname)
 	assert(class, "Invalid class passed to export")
-	_G["export_"..funcname] = function(...) return class()[funcname](...) end
+	_G["export_"..funcname] = function(...) return class[funcname](...) end
 end
 
 function import(resource)

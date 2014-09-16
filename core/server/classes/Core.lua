@@ -39,11 +39,12 @@ function Core:destructor()
 end
 
 function Core:setPlayerInfo(player, key, value)
+	outputChatBox(tostring(player))
 	player:setInfo(GamemodeManager:getSingleton():getGamemodes()[sourceResource].sqlName, key, value)
 end
 
 function Core:getPlayerInfo(player, key)
-	player:getInfo(GamemodeManager:getSingleton():getGamemodes()[sourceResource].sqlName, key)
+	return player:getInfo(GamemodeManager:getSingleton():getGamemodes()[sourceResource].sqlName, key)
 end
 
 export(Core, "setPlayerInfo")

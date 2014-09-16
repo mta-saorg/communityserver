@@ -1,5 +1,5 @@
 function Player:getInfo(key)
-	core:getPlayerInfo(self, key)
+	return core:getPlayerInfo(self, key)
 end
 
 function Player:setInfo(key, value)

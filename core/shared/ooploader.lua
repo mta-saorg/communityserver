@@ -5,19 +5,23 @@ local files = {
 		--[["shared/classlib.lua",]]
 	};
 	server = {
-		"serce/oopinclude/oopwrapper.lua",
+		--"server/oopinclude/oopwrapper.lua",
+		"server/oopinclude/Player.lua",
 	};
 	client = {
 	
 	};
 }
 
-for type, paths in ipairs(files) do
+for type, paths in pairs(files) do
 	if (triggerClientEvent and type == "server") or (triggerServerEvent and type == "client") or type == "shared" then
-		local fileHandle = fileOpen(path)
-		local content = fileRead(fileHandle, fileGetSize(fileHandle))
-		oopWrapperCode = oopWrapperCode.."\r\n"..content
-		fileClose(fileHandle)
+		for k, path in pairs(paths) do
+			outputDebugString("Lade OOP Wrapper: "..path)
+			local fileHandle = fileOpen(path)
+			local content = fileRead(fileHandle, fileGetSize(fileHandle))
+			oopWrapperCode = oopWrapperCode.."\n"..content
+			fileClose(fileHandle)
+		end
 	end
 end
 

@@ -31,10 +31,20 @@ function Player:getGamemode()
 end
 
 function Player:setInfo(gamemode, key, value)
+	gamemode = gamemore or GamemodeManager:getSingleton():getGamemodeFromResource("lobby")
+
+	-- Hackfix: Konstruktor wird nie aufgerufen
+	if not self.m_Info then
+		self.m_Info = {[gamemode] = {}}
+	end
+	if not self.m_Info[gamemode] then
+		self.m_Info[gamemode] = {}
+	end
 	self.m_Info[gamemode][key] = value
 end
 
 function Player:getInfo(gamemode, key)
+	gamemode = gamemode or GamemodeManager:getSingleton():getGamemodeFromResource("lobby")
 	return self.m_Info[gamemode][key]
 end
 

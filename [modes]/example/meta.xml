@@ -6,10 +6,10 @@
 		type="mode" 
 	/>
 	<oop>true</oop>
+	<script src="include.lua" type="shared" />
 	
 	<!-- SERVER -->
 	<script src="server/Main.lua" type="server" />
-	<script src="server/include.lua" type="server" />
 	
 	<export function="getGamemodeInfo" type="server" http="false" />
 	<export function="onPlayerJoinGamemode" type="server" http="false" />

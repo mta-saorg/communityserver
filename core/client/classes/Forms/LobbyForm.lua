@@ -1,29 +1,25 @@
 LobbyForm = inherit(Singleton)
 
-if not GuiGridList then
-	GuiGridList = GuiGridlist
-end
-
 function LobbyForm:constructor()
-	self.m_Window = guiCreateWindow(screenWidth/2-435/2, screenHeight/2-351/2, 435, 351, "Gamemode wechseln", false)
+	self.m_Window = GuiWindow(screenWidth/2-435/2, screenHeight/2-351/2, 435, 351, "Gamemode wechseln", false)
 	self.m_Window:setSizable(false)
 	self.m_Window:setVisible(false)
 
 	GuiLabel.create(10, 26, 38, 17, "Name:", false, self.m_Window):setFont("default-bold-small")
-	self.m_GamemodeName = GuiLabel.create(68, 26, 203, 17, "", false, self.m_Window)
+	self.m_GamemodeName = GuiLabel(68, 26, 203, 17, "", false, self.m_Window)
 	GuiLabel.create(10, 48, 48, 17, "Autoren:", false, self.m_Window):setFont("default-bold-small")
-	self.m_GamemodeAuthor = GuiLabel.create(68, 48, 203, 17, "", false, self.m_Window)
+	self.m_GamemodeAuthor = GuiLabel(68, 48, 203, 17, "", false, self.m_Window)
 	GuiLabel.create(10, 70, 40, 17, "Spieler:", false, self.m_Window):setFont("default-bold-small")
-	self.m_PlayerCount = GuiLabel.create(68, 70, 203, 17, "", false, self.m_Window)
+	self.m_PlayerCount = GuiLabel(68, 70, 203, 17, "", false, self.m_Window)
 
-	self.m_Image = guiCreateStaticImage(255, 26, 163, 137, ":core/files/images/Game.png", false, self.m_Window)
-	GuiLabel.create(10, 92, 83, 17, "Beschreibung:", false, self.m_Window):setFont("default-bold-small")
-	self.m_GamemodeDescription = GuiLabel.create(10, 114, 239, 75, "", false, self.m_Window)
+	self.m_Image = GuiStaticImage(255, 26, 163, 137, ":core/files/images/Game.png", false, self.m_Window)
+	GuiLabel(10, 92, 83, 17, "Beschreibung:", false, self.m_Window):setFont("default-bold-small")
+	self.m_GamemodeDescription = GuiLabel(10, 114, 239, 75, "", false, self.m_Window)
 	GuiLabel.create(10, 167, 83, 17, "Spieler:", false, self.m_Window):setFont("default-bold-small")
-	self.m_GridPlayers = GuiGridList.create(10, 189, 415, 113, false, self.m_Window)
+	self.m_GridPlayers = GuiGridList(10, 189, 415, 113, false, self.m_Window)
 	guiGridListAddColumn(self.m_GridPlayers, "Spieler", 0.9)
-	self.m_ButtonJoin = GuiButton.create(11, 309, 205, 32, "Betreten", false, self.m_Window)
-	self.m_ButtonClose = GuiButton.create(220, 309, 205, 32, "Schließen", false, self.m_Window)
+	self.m_ButtonJoin = GuiButton(11, 309, 205, 32, "Betreten", false, self.m_Window)
+	self.m_ButtonClose = GuiButton(220, 309, 205, 32, "Schließen", false, self.m_Window)
 
 	addEventHandler("onClientGUIClick", self.m_ButtonJoin, bind(self.ButtonJoin_Click, self), false)
 	addEventHandler("onClientGUIClick", self.m_ButtonClose, function() self:close() end, false)

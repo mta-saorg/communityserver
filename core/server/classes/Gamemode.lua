@@ -23,13 +23,11 @@ function Gamemode:constructor(resource, bNeededProperties, iID)
 	self.m_PlayerCount = 0
 	self.m_ID = iID
 	
-	if self.m_Blip then
-		self.m_BlipElement = Blip.create(self.m_Position, self.m_Blip)
-	end
-	
 	if self.m_Position then
-		self.m_Position = Vector3(self.m_Position) -- 1.4 HACK (remove as soon as fix from r6648 is available)
 		self.m_EnterMarker = Marker.create(self.m_Position, "cylinder", 2, 255, 90, 0)
+		if self.m_Blip then
+			self.m_BlipElement = Blip.create(self.m_Position, self.m_Blip)
+		end
 			
 		addEventHandler("onMarkerHit", self.m_EnterMarker,
 			function(hitElement, matchingDimension)
