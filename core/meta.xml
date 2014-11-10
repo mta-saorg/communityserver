@@ -13,7 +13,7 @@
 	<script src="shared/importexport.lua" type="shared" />
 	<script src="shared/useful.lua" type="shared" />
 	<script src="shared/Constants.lua" type="shared"/>
-	<script src="shared/ooploader.lua" type="shared"/>
+	<script src="shared/loader.lua" type="shared"/>
 	<script src="shared/classes/Object.lua" type="shared" />
 	<script src="shared/classes/Singleton.lua" type="shared" />
 	<script src="shared/classes/TimedPulse.lua" type="shared" />
@@ -47,7 +47,7 @@
 	<!-- Exports -->
 	<export function="export_setPlayerInfo" type="server" http="false" />
 	<export function="export_getPlayerInfo" type="server" http="false" />
-	<export function="getOOPWrapperCode" type="shared" http="false" />
+	<export function="getWrapperCode" type="shared" http="false" />
 
 	<!-- ACL-Requests -->
 	<aclrequest>

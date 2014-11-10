@@ -2,7 +2,8 @@
 	return {
 		Name = "Lobby (Freeroam)",
 		Description = "Dies ist das Hauptgamemode der Core Resource. Hier können Spielers durch die gegend Fahren oder einem anderem Gamemode beitreten",
-		MaxPlayer = 32,
+		Author = "mta-sa.org Core Entwickler",
+		MaxPlayer = 500,
 		MinPlayer = 1
 	}
 end

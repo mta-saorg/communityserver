@@ -277,6 +277,7 @@ end
 
 oop.prepareClass = function(name)
 	local mt = oop.mta_metatable[name]
+	if not mt then return end
 	
 	-- Store MTA's metafunctions
 	local __mtaindex = mt.__index
