@@ -11,6 +11,12 @@ function PlayerManager:constructor()
 	addEventHandler("onPlayerDownloadComplete", resourceRoot, bind(self.onPlayerDownloadComplete, self))
 end
 
+function PlayerManager:destructor()
+	for _, player in pairs(getElementsByType("player")) do
+		Account:getSingleton():saveAccount(player)
+	end
+end
+
 function PlayerManager:playerConnect(playerNick, playerIP, playerUsername, playerSerial, playerVersionNumber, playerVersionString)
 
 end
@@ -21,7 +27,11 @@ end
 
 function PlayerManager:playerQuit(quitType)
 	local currentGM = source:getGamemode()
-	currentGM:removePlayer(source)
+	if(currentGM) then
+		currentGM:removePlayer(source)
+	end
+	
+	Account:getSingleton():saveAccount(source)	
 end
 
 function PlayerManager:playerChat(msg, mtype)

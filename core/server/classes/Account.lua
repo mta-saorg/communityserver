@@ -1,6 +1,15 @@
 local passwortSalt = ""
 local maxAccounts = 2
 
+local dataToSave =
+{
+	"Account",
+	"Passwort",
+	"Punkte",
+	"Geld",
+	"Gruppe"
+}
+
 Account = inherit(Singleton)
 
 function Account:constructor()
@@ -25,6 +34,8 @@ function Account:checkLogin(passwort)
 				client:setInfo(field, value)
 			end
 			triggerClientEvent(client, "onClientReceiveAccountCheck", resourceRoot, nil)
+			
+			client:setInfo("loggedin", true)
 			PlayerManager:getSingleton():onPlayerLogin(client)
 		end
 	else outputChatBox("Das Passwort muss zwischen 5 und 20 Zeichen lang sein!", client, 255, 100, 100) end
@@ -40,6 +51,7 @@ function Account:createAccount(passwort)
 				local result, _, ID = MySQL:queryFetch("INSERT INTO `accounts` (`Account`, `Passwort`, `Serial`) VALUES(?, ?, ?)", client:getName(), passwort, getPlayerSerial(client))
 				if(result and ID) then
 					client:setInfo("ID", ID)
+					client:setInfo("loggedin", true)
 					triggerClientEvent(client, "onClientReceiveAccountCheck", resourceRoot, nil)
 					PlayerManager:getSingleton():onPlayerRegister(client)
 				end				
@@ -50,4 +62,23 @@ end
 
 function Account:generatePasswort(passwort)
 	return sha256(md5(passwort..passwortSalt))
+end
+
+function Account:saveAccount(player)
+	if(player:isLoggedIn()) then
+		local query = "UPDATE `accounts` SET "
+		local arguments = {}
+
+		for i, data in pairs(dataToSave) do
+			query = ("%s`%s` = ?, "):format(query, data)
+			arguments[i] =  player:getInfo(data)
+		end
+		query = query:sub(1, query:len() - 2)
+		query = ("%s WHERE `ID` = ?"):format(query)
+		arguments[#arguments + 1] = player:getInfo("ID")
+		
+		MySQL:queryExec(query, unpack(arguments))
+		
+		
+	end
 end

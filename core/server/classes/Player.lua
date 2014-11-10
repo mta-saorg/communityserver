@@ -16,12 +16,12 @@ function Player:setInfo(key, value)
 end
 
 function Player:getInfo(key)
-	return self.m_Info[key]
+	if not self.m_Info then self.m_Info = {} end
+	return self.m_Info[key] or false
 end
 
 function Player:isLoggedIn()
-	-- Todo: Check
-	return true
+	return self:getInfo("loggedin")
 end
 
 function Player:isMuted()
