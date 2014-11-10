@@ -17,7 +17,3 @@ function import(resource)
 end
 
 core = import("core")
-
--- HACK, um OOP während der Laufzeit nachzuladen
-outputChatBox(exports.core:getOOPWrapperCode())
-loadstring(exports.core:getOOPWrapperCode())()

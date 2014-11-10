@@ -35,7 +35,7 @@ function Player:setInfo(gamemode, key, value)
 
 	-- Hackfix: Konstruktor wird nie aufgerufen
 	if not self.m_Info then
-		self.m_Info = {[gamemode] = {}}
+		self.m_Info = {gamemode = {}}
 	end
 	if not self.m_Info[gamemode] then
 		self.m_Info[gamemode] = {}

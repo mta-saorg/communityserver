@@ -90,7 +90,9 @@ function Gamemode:addPlayer(player)
 		player:setGamemode(self)
 
 		if getResourceName(self.m_Resource) ~= "core" then
-			self:broadcastMessage(("#0678ee* #d9d9d9%s #d9d9d9has joined Gamemode #0678ee%s#d9d9d9 (%d/%d) #0678ee*"):format(player:getName(), self.m_Name, self.m_PlayerCount, self.m_MaxPlayer), 0, 0, 0, true)
+			self:broadcastMessage(("#0678ee* #d9d9d9%s #d9d9d9hat den Gamemode betreten."):format(player:getName()), 0, 0, 0, true)
+			outputChatBox(("#d9d9d9Du hast den Gamemode #0678ee'%s' #d9d9d9betreten. #d9d9d9(%d/%d)"):format(self.m_Name, self.m_PlayerCount, self.m_MaxPlayer), player, 255, 255, 255, true);
+
 			call(self:getResource(), "onPlayerJoinGamemode", player)
 		end
 		return true

@@ -1,3 +1,5 @@
+local onResourceStart, onResourceStop
+
 function getGamemodeInfo()
 	return {
 		Name = "Example Gamemode",
@@ -10,18 +12,27 @@ function getGamemodeInfo()
 	}
 end
 
+ENABLEOOP = false
+
 function onPlayerJoinGamemode(player)
-	player:setInfo("myKey", "myValue")
-	outputChatBox(player:getInfo("myKey"))
+	--player:setInfo("myKey", "myValue")
+	setPlayerInfo(player, "myKey", "myValue")
+	--outputChatBox(player:getInfo("myKey"))
+	outputChatBox(getPlayerInfo(player, "myKey"))
 end
 
 function onPlayerQuitGamemode(player)
 
 end
 
-addCommandHandler("testclasses",
-	function(player)
-		player:setInfo("myKey", "myValue")
-		outputChatBox(player:getInfo("myKey"))
-	end
-)
+function onResourceStart()
+	-- core:getWrapperCode(ENABLEOOP) does not work for some reasons
+	loadstring(exports.core:getWrapperCode(ENABLEOOP))()
+end
+
+function onResourceStop()
+
+end
+
+addEventHandler("onResourceStart", resourceRoot, onResourceStart)
+addEventHandler("onResourceStop", resourceRoot, onResourceStop)
