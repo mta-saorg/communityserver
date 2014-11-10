@@ -6,21 +6,17 @@ function PlayerManager:constructor()
 	addEventHandler("onPlayerJoin", root, bind(self.playerJoin, self), true, "high+99999")
 	addEventHandler("onPlayerQuit", root, bind(self.playerQuit, self), true, "high+99999")
 	addEventHandler("onPlayerChat", root, bind(self.playerChat, self))
+	
+	addEvent("onPlayerDownloadComplete", true)
+	addEventHandler("onPlayerDownloadComplete", resourceRoot, bind(self.onPlayerDownloadComplete, self))
 end
 
 function PlayerManager:playerConnect(playerNick, playerIP, playerUsername, playerSerial, playerVersionNumber, playerVersionString)
-	local player = getPlayerFromName(playerNick)
 
-	-- call the player constructor to extend the mta class
-	Player.constructor(player)
 end
 
 function PlayerManager:playerJoin()
-	if not GamemodeManager:getSingleton():getGamemodeFromResource("lobby") then
-		GamemodeManager:getSingleton():getGamemodeFromResource(getThisResource()):addPlayer(source)
-	else
-		GamemodeManager:getSingleton():getGamemodeFromResource("lobby"):addPlayer(source)
-	end
+
 end
 
 function PlayerManager:playerQuit(quitType)
@@ -40,4 +36,27 @@ function PlayerManager:playerChat(msg, mtype)
 		
 		end
 	end
+end
+
+function PlayerManager:onPlayerDownloadComplete()
+	Account:getSingleton():checkAccount()
+end
+
+function PlayerManager:onPlayerLogin(player)
+	self:setPlayerDefaultGamemode(player)
+	outputChatBox("Du hast dich erfolgreich angemeldet", player, 255, 100, 100)
+
+end
+
+function PlayerManager:onPlayerRegister(player)
+	self:setPlayerDefaultGamemode(player)
+	outputChatBox("Du hast dich erfolgreich registriert", player, 255, 100, 100)
+end
+
+function PlayerManager:setPlayerDefaultGamemode(player)
+	if not GamemodeManager:getSingleton():getGamemodeFromResource("lobby") then
+		GamemodeManager:getSingleton():getGamemodeFromResource(getThisResource()):addPlayer(player)
+	else
+		GamemodeManager:getSingleton():getGamemodeFromResource("lobby"):addPlayer(player)
+	end	
 end

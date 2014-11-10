@@ -7,50 +7,36 @@ local files = {
 	};
 	server = {
 		--"server/oopinclude/oopwrapper.lua",
-		"server/includes/nonoop/Player.lua",
+		{false, "server/includes/nonoop/Player.lua"},
+		{true, "server/includes/oop/Player.lua"},
 	};
 	client = {
 	
 	};
 }
 
-local oopfiles = {
-	shared = {
-		--[["shared/classlib.lua",]]
-	};
-	server = {
-		--"server/oopinclude/oopwrapper.lua",
-		"server/includes/oop/Player.lua",
-	};
-	client = {
-	
-	};
-}
 
-for type, paths in pairs(files) do
-	if (triggerClientEvent and type == "server") or (triggerServerEvent and type == "client") or type == "shared" then
-		for k, path in pairs(paths) do
-			outputDebugString("Lade Wrapper: "..path)
-			local fileHandle = fileOpen(path)
-			local content = fileRead(fileHandle, fileGetSize(fileHandle))
-			normalWrappercode = normalWrappercode.."\n"..content
-			fileClose(fileHandle)
-		end
-	end
-end
-
-for type, paths in pairs(oopfiles) do
-	if (triggerClientEvent and type == "server") or (triggerServerEvent and type == "client") or type == "shared" then
-		for k, path in pairs(paths) do
-			outputDebugString("Lade OOP Wrapper: "..path)
-			local fileHandle = fileOpen(path)
-			local content = fileRead(fileHandle, fileGetSize(fileHandle))
-			oopWrapperCode = oopWrapperCode.."\n"..content
-			fileClose(fileHandle)
+for typ, paths in pairs(files) do
+	if((SERVER and typ == "server") or (not SERVER and typ == "client") or typ == "shared") then
+		for _, path in pairs(paths) do
+			
+			if(DEBUG) then
+				outputDebugString(("Lade %s Code: %s"):format((path[1] and "OOP" or ''), path[2]))
+			end
+			
+			local file = fileOpen(path[2])
+			local content = fileRead(file, fileGetSize(file))
+			fileClose(file)
+			
+			if(path[1]) then
+				oopWrapperCode = ("%s\n%s"):format(oopWrapperCode, content)
+			else
+				normalWrappercode = ("%s\n%s"):format(normalWrappercode, content)
+			end
 		end
 	end
 end
 
 function getWrapperCode(oop)
-	return oop and oopWrapperCode or normalWrappercode
+	return (oop and oopWrapperCode or normalWrappercode)
 end

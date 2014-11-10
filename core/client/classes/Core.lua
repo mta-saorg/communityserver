@@ -5,6 +5,9 @@ function Core:constructor()
 		Debugging:new()
 	end
 	LobbyForm:new()
+	Account:new()
+	
+	triggerServerEvent("onPlayerDownloadComplete", resourceRoot)
 end
 
 function Core:destructor()

@@ -1,15 +1,14 @@
 Core = inherit(Singleton)
 
 function Core:constructor()
-	sql = Database:new(DATABASE_HOST, DATABASE_USER, DATABASE_PASSWORD, DATABASE_NAME)
+	MySQL = Database:new(DATABASE_HOST, DATABASE_USER, DATABASE_PASSWORD, DATABASE_NAME)
 	
 	-- Initialize managers
 	GamemodeManager:new()
 	PermissionManager:new()
 	PlayerManager:new()
-	if DEBUG then
-		Debugging:new()
-	end
+	if DEBUG then Debugging:new() end
+	Account:new()
 	
 	--Tests:
 	local permHandle = PermissionManager:getSingleton()
@@ -31,7 +30,8 @@ function Core:destructor()
 	delete(PlayerManager:getSingleton())
 	delete(PermissionManager:getSingleton())
 	
-	delete(sql)
+	delete(Account:getSingleton())
+	delete(MySQL)
 	
 	if DEBUG then
 		delete(Debugging:getSingleton())
@@ -39,12 +39,11 @@ function Core:destructor()
 end
 
 function Core:setPlayerInfo(player, key, value)
-	outputChatBox(tostring(player))
-	player:setInfo(GamemodeManager:getSingleton():getGamemodes()[sourceResource].sqlName, key, value)
+	player:setInfo(key, value)
 end
 
 function Core:getPlayerInfo(player, key)
-	return player:getInfo(GamemodeManager:getSingleton():getGamemodes()[sourceResource].sqlName, key)
+	return player:getInfo(key)
 end
 
 export(Core, "setPlayerInfo")

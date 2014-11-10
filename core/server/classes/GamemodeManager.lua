@@ -7,12 +7,7 @@ function GamemodeManager:constructor()
 	
 	-- register the waiting area ( hacky )
 	self.m_Gamemodes[getThisResource()] = Gamemode:new(getThisResource(), false, 0)
-	
-	-- move every player into the waiting area
-	for _, player in pairs(getElementsByType("player")) do
-		self:getGamemodeFromResource(getThisResource()):addPlayer(player)
-	end
-	
+		
 	-- add the event handlers
 	addEvent("onGamemodeJoin", true)
 	addEventHandler("onResourceStart", root, bind(self.Event_resourceStart, self))
